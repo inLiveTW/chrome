@@ -6,14 +6,30 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
 .config(function($stateProvider, $urlRouterProvider) {
 
   $stateProvider
-
-    .state('channel', {
+    .state('tab', {
+      url: '/tab',
+      abstract: true,
+      templateUrl: 'template/tab.html'
+    })
+    .state('tab.channel', {
       url: '/channel',
-      templateUrl: 'template/channel.html',
-      controller: 'ChannelCtrl'
-    });
+      views: {
+        'channel-tab': {
+          templateUrl: 'template/channel.html'
+        }
+      }
+    })
+    .state('tab.live', {
+      url: '/live',
+      views: {
+        'live-tab': {
+          templateUrl: 'template/live.html',
+          controller: 'LiveCtrl'
+        }
+      }
+    })
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/channel');
+  $urlRouterProvider.otherwise('/tab/live');
 
 });
