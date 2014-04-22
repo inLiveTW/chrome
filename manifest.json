@@ -1,11 +1,11 @@
 {
   "name": "LiveTW",
   "manifest_version": 2,
-  "version": "0.1.6",
+  "version": "0.1.7",
   "browser_action": {
     "default_icon": "image/icon/onair.png",
     "default_title": "LiveTW",
-    "default_popup": "popup.html"
+    "default_popup": "index.html"
   },
   "permissions": [
     "http://g0v.github.io/*",
