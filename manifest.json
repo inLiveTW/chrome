@@ -6,5 +6,9 @@
     "default_icon": "image/icon/onair.png",
     "default_title": "LiveTW",
     "default_popup": "popup.html"
-  }
+  },
+  "permissions": [
+    "http://g0v.github.io/*",
+    "https://g0v.github.io/*"
+  ]
 }

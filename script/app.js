@@ -15,7 +15,8 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
       url: '/channel',
       views: {
         'channel-tab': {
-          templateUrl: 'template/channel.html'
+          templateUrl: 'template/channel.html',
+          controller: 'ChannelCtrl'
         }
       }
     })

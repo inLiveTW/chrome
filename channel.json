@@ -3,31 +3,36 @@
     "vid": "g0vtw",
     "type": "youtube",
     "url": "https://www.youtube.com/user/g0vTW",
-    "title": "G0V"
+    "title": "G0V",
+    "thumb": "https://yt3.ggpht.com/-Y3ISOi_zAqc/AAAAAAAAAAI/AAAAAAAAAAA/AYkPlWTz3Uc/s48-c-k-no/photo.jpg"
   },
   {
     "vid": "indietaiwan",
     "type": "youtube",
     "url": "https://www.youtube.com/user/indietaiwan",
-    "title": "音地大帝"
+    "title": "音地大帝",
+    "thumb": "https://yt3.ggpht.com/-H5NtgyCUESE/AAAAAAAAAAI/AAAAAAAAAAA/P_F9nQRUdFE/s48-c-k-no/photo.jpg"
   },
   {
     "vid": "yuting1987",
     "type": "youtube",
     "url": "https://www.youtube.com/user/yuting1987",
-    "title": "YuTin直播"
+    "title": "YuTin直播",
+    "thumb": "https://yt3.ggpht.com/--MGH46klJxE/AAAAAAAAAAI/AAAAAAAAAAA/xqJrcdwx82U/s48-c-k-no/photo.jpg"
   },
   {
     "vid": "UC6BgDThjkr6sEOovgcrvXjQ",
     "type": "youtube",
     "url": "https://www.youtube.com/channel/UC6BgDThjkr6sEOovgcrvXjQ",
-    "title": "Pei-Che Chang"
+    "title": "Pei-Che Chang",
+    "thumb": "https://yt3.ggpht.com/-vV6oOnvGfZM/AAAAAAAAAAI/AAAAAAAAAAA/4XC88oZ10UY/s48-c-k-no/photo.jpg"
   },
   {
     "vid": "mythusystem",
     "type": "youtube",
     "url": "https://www.youtube.com/user/mythusystem",
-    "title": "台中大腸餅"
+    "title": "台中大腸餅",
+    "thumb": "https://yt3.ggpht.com/-mGnjc-hCYGg/AAAAAAAAAAI/AAAAAAAAAAA/J5vmHja7ivE/s48-c-k-no/photo.jpg"
   },
   {
     "vid": "17831478",
@@ -45,30 +50,35 @@
     "vid": "nonukestw",
     "type": "ustream",
     "url": "http://www.ustream.tv/channel/nonukestw",
-    "title": "不要核四、五六運動"
+    "title": "不要核四、五六運動",
+    "thumb": "http://static-cdn1.ustream.tv/i/channel/picture/1/7/8/3/17831478/17831478,66x66,r:2.jpg"
   },
   {
     "vid": "17747496",
     "type": "ustream",
     "url": "http://www.ustream.tv/channel/17747496",
-    "title": "台南魚腸花"
+    "title": "台南魚腸花",
+    "thumb": "http://static-cdn1.ustream.tv/i/user/picture/3/2/0/0/32007982/32007982_1978322_1020089476681_1397346765,66x66,r:1.jpg"
   },
   {
     "vid": "17569549",
     "type": "ustream",
     "url": "http://www.ustream.tv/channel/17569549",
-    "title": "g0v機動01"
+    "title": "g0v機動01",
+    "thumb": "http://static-cdn2.ustream.tv/i/channel/picture/1/7/5/6/17569549/17569549,66x66,r:3.jpg"
   },
   {
     "vid": "bananana",
     "type": "ustream",
     "url": "http://www.ustream.tv/channel/bananana",
-    "title": "Bananana直播"
+    "title": "Bananana直播",
+    "thumb": "http://static-cdn1.ustream.tv/images/defaults/user_66x66:1.png"
   },
   {
     "vid": "noodlesking",
     "type": "ustream",
     "url": "http://www.ustream.tv/channel/noodlesking",
-    "title": "麵線直播"
+    "title": "麵線直播",
+    "thumb": "http://static-cdn1.ustream.tv/images/defaults/user_66x66:1.png"
   }
 ]

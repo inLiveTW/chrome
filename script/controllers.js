@@ -20,6 +20,26 @@ angular.module('starter.controllers', [])
     });
 })
 
+.controller('ChannelCtrl', function($scope, $http, $ionicLoading, $ionicPopup) {
+  $scope.channels = [];
+  $scope.logging = $ionicLoading.show({
+    content: '更新中...',
+  });
+  $http({
+    method: 'GET',
+    url: 'https://g0v.github.io/liveext/channel.json',
+    cache: false
+  }).
+    success(function(data, status, headers, config) {
+      $scope.logging.hide();
+      console.log(data);
+      $scope.channels = data;
+    }).
+    error(function(data, status, headers, config) {
+    });
+})
+
+
 .controller('MainCtrl', function($scope, $ionicSideMenuDelegate) {
   $scope.leftButtons = [{
     type: 'button-icon icon ion-navicon',
