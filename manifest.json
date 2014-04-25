@@ -1,9 +1,9 @@
 {
   "name": "LiveTW",
   "manifest_version": 2,
-  "version": "0.1.7",
+  "version": "0.1.9",
   "browser_action": {
-    "default_icon": "image/icon/onair.png",
+    "default_icon": "image/icon/LiveTW.png",
     "default_title": "LiveTW",
     "default_popup": "index.html"
   },

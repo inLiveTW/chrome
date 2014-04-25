@@ -12,8 +12,10 @@ angular.module('starter.controllers', [])
   }).
     success(function(data, status, headers, config) {
       $scope.logging.hide();
-      for (key in data) {
-        $scope.lives.push(data[key]);
+      if (typeof data === 'object') {
+        for (key in data) {
+          $scope.lives.push(data[key]);
+        }
       }
     }).
     error(function(data, status, headers, config) {
