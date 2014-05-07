@@ -56,15 +56,13 @@ angular.module('starter.controllers', [])
 
       if (typeof data === 'object') {
         for (key in data) {
+          data[key].sortKey = new Date(data[key].start).getTime();
           temp.push(data[key]);
         }
       }
-      for (var i = temp.length / 2; i >= 0; i--) {
-        temp.sort(function(x,y){
-          return new Date(x.start).getTime() > new Date(y.start).getTime();
-        });
-      };
-      window.x = temp;
+      temp.sort(function(x,y){
+        return x.sortKey > y.sortKey ? 1 : -1;
+      });
       $scope.events = temp;
     }).
     error(function(data, status, headers, config) {

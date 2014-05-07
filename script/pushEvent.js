@@ -1,6 +1,15 @@
 var pushNotification;
 document.addEventListener("deviceready", onDeviceReady, false);
 
+function registerToken(token){
+    {
+        'type': device.platform.toLowerCase(),
+        'token': token,
+        'channel': []
+    }
+
+}
+
 function onDeviceReady(){
   try{
     pushNotification = window.plugins.pushNotification;
