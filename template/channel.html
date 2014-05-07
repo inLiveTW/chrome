@@ -13,7 +13,7 @@
         <p>{{channel.vid}}</p>
       </div>
 
-      <a class="item item-icon-left assertive" target="_blank" href="{{channel.url}}">
+      <a class="item item-icon-left assertive" ng-click="open('{{channel.url}}')">
         <i class="icon ion-play"></i>
         播放頻道 {{channel.type}}
       </a>

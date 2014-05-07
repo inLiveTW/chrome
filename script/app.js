@@ -1,5 +1,4 @@
 // Ionic Starter App
-
 angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
 
 
@@ -29,8 +28,29 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
         }
       }
     })
+    .state('tab.event', {
+      url: '/event',
+      views: {
+        'event-tab': {
+          templateUrl: 'template/event.html',
+          controller: 'EventCtrl'
+        }
+      }
+    })
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/live');
 
+})
+
+.filter('toDateTime', function(){
+  return function(str){
+    return str.replace(/\+.*/gi, '').replace(/[^0-9:-]/gi, ' ');
+  };
+})
+
+.run(function($rootScope){
+  $rootScope.open = function(url){
+    window.open(url, '_blank');
+  };
 });

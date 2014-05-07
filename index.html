@@ -5,16 +5,14 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title>LiveTW</title>
 
-    <!-- ionic css -->
     <link href="lib/css/ionic.min.css" rel="stylesheet">
-
-    <!-- your app's css -->
     <link href="stylus/app.css" rel="stylesheet">
 
-    <!-- ionic/angularjs scripts -->
     <script src="lib/js/ionic.bundle.js"></script>
-
-    <!-- your app's script -->
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="PushNotification.js"></script>
+    <script type="text/javascript" src="script/pushEvent.js"></script>
+    
     <script src="script/app.js"></script>
     <script src="script/services.js"></script>
     <script src="script/controllers.js"></script>
@@ -25,6 +23,5 @@
     <div ng-controller="MainCtrl">       
       <ion-nav-view></ion-nav-view>
     </div>
-
   </body>
 </html>

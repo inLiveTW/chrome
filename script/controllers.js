@@ -34,8 +34,38 @@ angular.module('starter.controllers', [])
   }).
     success(function(data, status, headers, config) {
       $scope.logging.hide();
-      console.log(data);
       $scope.channels = data;
+    }).
+    error(function(data, status, headers, config) {
+    });
+})
+
+.controller('EventCtrl', function($scope, $http, $ionicLoading, $ionicPopup) {
+  $scope.events = [];
+  $scope.logging = $ionicLoading.show({
+    content: '更新中...',
+  });
+  $http({
+    method: 'GET',
+    url: 'https://livelink.firebaseio.com/event/.json',
+    cache: false
+  }).
+    success(function(data, status, headers, config) {
+      $scope.logging.hide();
+      var temp = [];
+
+      if (typeof data === 'object') {
+        for (key in data) {
+          temp.push(data[key]);
+        }
+      }
+      for (var i = temp.length / 2; i >= 0; i--) {
+        temp.sort(function(x,y){
+          return new Date(x.start).getTime() > new Date(y.start).getTime();
+        });
+      };
+      window.x = temp;
+      $scope.events = temp;
     }).
     error(function(data, status, headers, config) {
     });

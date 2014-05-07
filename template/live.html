@@ -8,12 +8,12 @@
     <div class="card" ng-repeat="live in lives">
 
       <div class="item item-avatar">
-        <img src="http://static-cdn1.ustream.tv/images/defaults/user_66x66:1.png">
+        <img src="{{live.logo}}">
         <h2>{{live.title}}</h2>
         <p>{{live.vid}}</p>
       </div>
 
-      <a class="item item-icon-left assertive" target="_blank" href="{{live.url}}">
+      <a class="item item-icon-left assertive" ng-click="open('{{live.url}}')">
         <i class="icon ion-radio-waves"></i>
         立即收看 {{live.type}}
       </a>

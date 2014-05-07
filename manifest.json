@@ -1,14 +1,27 @@
 {
   "name": "LiveTW",
   "manifest_version": 2,
-  "version": "0.1.9",
+  "version": "0.2.9",
   "browser_action": {
     "default_icon": "image/icon/LiveTW.png",
     "default_title": "LiveTW",
     "default_popup": "index.html"
   },
+  "background": {
+    "scripts": ["script/parse.js", "background.js"]
+  },
   "permissions": [
-    "http://g0v.github.io/*",
-    "https://g0v.github.io/*"
+    "*://g0v.github.io/*",
+    "*://www.facebook.com/events/*",
+    "pushMessaging",
+    "notifications",
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://www.facebook.com/events/*"],
+      "css": ["content/content.css"],
+      "js": ["script/jquery.js", "script/parse.js", "content/content.js"]
+    }
   ]
 }
