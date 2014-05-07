@@ -8,7 +8,7 @@
     "default_popup": "index.html"
   },
   "background": {
-    "scripts": ["script/parse.js", "config.js", "background.js"]
+    "scripts": ["plugin/parse.js", "config.js", "background/background.js"]
   },
   "permissions": [
     "*://g0v.github.io/*",
@@ -21,7 +21,7 @@
     {
       "matches": ["*://www.facebook.com/events/*"],
       "css": ["content/content.css"],
-      "js": ["script/jquery.js", "script/parse.js", "content/content.js"]
+      "js": ["plugin/jquery.js", "plugin/parse.js", "content/content.js"]
     }
   ]
 }
