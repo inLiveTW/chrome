@@ -1,4 +1,2 @@
-liveext
+LiveTW for chrome
 =======
-
-live channel for chrome extension

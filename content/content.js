@@ -12,7 +12,7 @@ $(function(){
     $('i', button).attr('class','fa fa-flag fa-lg');
     $('spna', button).text('LiveTW抄收');
 
-    Parse.initialize('IYt2sQC9UsZDKeTzD2AxVhw8z6IGCzOivxK1ppp8','Ia4cRpS1UhJusj1hjsatBoOIVh6GXFpwO2xxxCBY');
+    Parse.initialize(cfg.chrome.appId, cfg.chrome.appKey);
     var Fbevent = Parse.Object.extend("fbevent");
     var fbeventObj = new Fbevent();
 

@@ -2,7 +2,7 @@
  * Token
  */
 
-Parse.initialize('IYt2sQC9UsZDKeTzD2AxVhw8z6IGCzOivxK1ppp8','Ia4cRpS1UhJusj1hjsatBoOIVh6GXFpwO2xxxCBY');
+Parse.initialize(cfg.chrome.appId, cfg.chrome.appKey);
 var Token = Parse.Object.extend("token");
 var tokenObj = new Token();
 
