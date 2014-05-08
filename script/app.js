@@ -1,7 +1,6 @@
 // Ionic Starter App
 angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
 
-
 .config(function($stateProvider, $urlRouterProvider) {
 
   $stateProvider
@@ -22,7 +21,7 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
     .state('tab.live', {
       url: '/live',
       views: {
-        'live-tab': {
+        'channel-tab': {
           templateUrl: 'template/live.html',
           controller: 'LiveCtrl'
         }
@@ -34,6 +33,15 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
         'event-tab': {
           templateUrl: 'template/event.html',
           controller: 'EventCtrl'
+        }
+      }
+    })
+    .state('tab.setting', {
+      url: '/setting',
+      views: {
+        'setting-tab': {
+          templateUrl: 'template/setting.html',
+          controller: 'SettingCtrl'
         }
       }
     })

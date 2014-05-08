@@ -5,39 +5,51 @@ angular.module('starter.controllers', [])
   $scope.logging = $ionicLoading.show({
     content: '掃描中...',
   });
+  $scope.title = '直播';
+
   $http({
     method: 'GET',
     url: 'https://livelink.firebaseio.com/live/.json',
     cache: false
-  }).
-    success(function(data, status, headers, config) {
+  })
+  .success(function(data, status, headers, config) {
       $scope.logging.hide();
       if (typeof data === 'object') {
         for (key in data) {
           $scope.lives.push(data[key]);
         }
       }
-    }).
-    error(function(data, status, headers, config) {
-    });
+  })
+  .error(function(data, status, headers, config) {
+  });
 })
 
-.controller('ChannelCtrl', function($scope, $http, $ionicLoading, $ionicPopup) {
+.controller('ChannelCtrl', function($scope, $http, $location, $ionicLoading, $ionicPopup) {
   $scope.channels = [];
   $scope.logging = $ionicLoading.show({
     content: '更新中...',
   });
+  $scope.title = '頻道';
+  $scope.rightButtons = [
+    {
+      content: '直播',
+      type: 'icon-right ion-social-rss',
+      tap: function(e) {
+        $location.path("#/tab/live");
+      }
+    }
+  ];
   $http({
     method: 'GET',
     url: 'https://g0v.github.io/liveext/channel.json',
     cache: false
-  }).
-    success(function(data, status, headers, config) {
-      $scope.logging.hide();
-      $scope.channels = data;
-    }).
-    error(function(data, status, headers, config) {
-    });
+  })
+  .success(function(data, status, headers, config) {
+    $scope.logging.hide();
+    $scope.channels = data;
+  })
+  .error(function(data, status, headers, config) {
+  });
 })
 
 .controller('EventCtrl', function($scope, $http, $ionicLoading, $ionicPopup) {
@@ -69,15 +81,13 @@ angular.module('starter.controllers', [])
     });
 })
 
-
-.controller('MainCtrl', function($scope, $ionicSideMenuDelegate) {
-  $scope.leftButtons = [{
-    type: 'button-icon icon ion-navicon',
-    tap: function(e) {
-      $ionicSideMenuDelegate.toggleLeft($scope.$$childHead);
-    }
-  }];
-  $scope.toggleMenu = function () {
-    $ionicSideMenuDelegate.toggleLeft($scope.$$childHead);
-  }
+.controller('SettingCtrl', function($scope, $http, $ionicLoading, $ionicPopup, PushService) {
+  $scope.push = {
+    'live': PushService.getLive(),
+    'event': PushService.getEvent(),
+    'message': PushService.getMessage()
+  };
+  $scope.$watch('push.live', PushService.setLive);
+  $scope.$watch('push.event', PushService.setEvent);
+  $scope.$watch('push.message', PushService.setMessage);
 });
