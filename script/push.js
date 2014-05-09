@@ -1,16 +1,7 @@
 var pushNotification;
 var deviceRegisterToken;
 
-if ( device ) {
-  document.addEventListener("deviceready", onDeviceReady, false);
-
-  alert(device.name);
-  alert(device.cordova);
-  alert(device.platform);
-  alert(device.uuid);
-  alert(device.version);
-  alert(device.model);
-}
+document.addEventListener("deviceready", onDeviceReady, false);
 
 function registerToken(){
   if ( !deviceRegisterToken ) {
@@ -30,8 +21,14 @@ function registerToken(){
 
   postParse('mobile_token', {
     'type': device.platform.toLowerCase(),
+    'uuid': device.uuid,
     'token': deviceRegisterToken,
-    'channel': channel
+    'channel': channel,
+    'device': {
+      'name': device.name,
+      'version': device.version,
+      'model': device.model
+    }
   }, function (err, obj) {
     if (err) {
       console.log('save token error: ', error);

@@ -4,7 +4,6 @@
 
 var registerToken = function(){
   var channel = [];
-  Parse.initialize(cfg.chrome.appId, cfg.chrome.appKey);
 
   if ( ! (localStorage && localStorage['push_live']==='false') ) {
     channel.push('live');
@@ -17,16 +16,18 @@ var registerToken = function(){
   }
 
   chrome.pushMessaging.getChannelId(true, function(res){
-    postParse('chrome_token', {
-      'token': res.channelId,
-      'channel': channel
-    }, function (err, obj) {
-      if (err) {
-        console.log('save token error: ', error);
-      }else{
-        console.log('save token:', res.channelId, 'obj id:', obj.id, 'channel:', channel);
-      }
-    });
+    if ( res.channelId ) {
+      postParse('chrome_token', {
+        'token': res.channelId,
+        'channel': channel
+      }, function (err, obj) {
+        if (err) {
+          console.log('save token error: ', error);
+        }else{
+          console.log('save token:', res.channelId, 'obj id:', obj.id, 'channel:', channel);
+        }
+      });
+    }
   });
 }
 
