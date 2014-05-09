@@ -1,14 +1,14 @@
 {
   "name": "LiveTW",
   "manifest_version": 2,
-  "version": "0.2.9",
+  "version": "0.3.1",
   "browser_action": {
     "default_icon": "image/icon/LiveTW.png",
     "default_title": "LiveTW",
     "default_popup": "index.html"
   },
   "background": {
-    "scripts": ["plugin/parse.js", "config.js", "background/background.js"]
+    "scripts": ["plugin/parse.js", "config.js", "script/parse.js" "background/background.js"]
   },
   "permissions": [
     "*://g0v.github.io/*",

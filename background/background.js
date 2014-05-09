@@ -2,28 +2,36 @@
  * Token
  */
 
-Parse.initialize(cfg.chrome.appId, cfg.chrome.appKey);
-var Token = Parse.Object.extend("token");
-var tokenObj = new Token();
+var registerToken = function(){
+  var channel = [];
+  Parse.initialize(cfg.chrome.appId, cfg.chrome.appKey);
 
-var updateToken = function(){
+  if ( ! (localStorage && localStorage['push_live']==='false') ) {
+    channel.push('live');
+  }
+  if ( ! (localStorage && localStorage['push_event']==='false') ) {
+    channel.push('event');
+  }
+  if ( ! (localStorage && localStorage['push_message']==='false') ) {
+    channel.push('message');
+  }
+
   chrome.pushMessaging.getChannelId(true, function(res){
-    tokenObj.save({
-      token: res.channelId,
-    }, {
-      success: function(obj) {
-        console.log('save token: ', res.channelId, 'obj id: ', obj.id);
-      },
-      error: function(obj, error) {
+    postParse('chrome_token', {
+      'token': res.channelId,
+      'channel': channel
+    }, function (err, obj) {
+      if (err) {
         console.log('save token error: ', error);
+      }else{
+        console.log('save token:', res.channelId, 'obj id:', obj.id, 'channel:', channel);
       }
     });
   });
 }
 
-setInterval(updateToken, 3 * 24 * 60 * 60 * 1000);
-updateToken();
-
+setInterval(registerToken, 3 * 24 * 60 * 60 * 1000);
+registerToken();
 
 /**
  *  Notify
@@ -34,21 +42,31 @@ chrome.pushMessaging.onMessage.addListener(function(message){
   if ( payload ) {
     switch(payload.type) {
       case 'live':
-        notify("現正直播 - " + payload.title, function(){
-          if ( payload.url ){
-            window.open(payload.url);
-          } 
-        });
+        if ( !(localStorage && localStorage['push_live']==="false") ) {
+          notify("現正直播 - " + payload.title, function(){
+            if ( payload.link ){
+              window.open(payload.link);
+            } 
+          });
+        }
         break;
       case 'event':
-        notify("事件通知 - " + payload.title, function(){
-          if ( payload.url ){
-            window.open(payload.url);
-          } 
-        });
+        if ( !(localStorage && localStorage['push_event']==="false") ) {
+          notify("事件通知 - " + payload.title, function(){
+            if ( payload.link ){
+              window.open(payload.link);
+            } 
+          });
+        }
         break;
       case 'message':
-        notify(payload.title);
+        if ( !(localStorage && localStorage['push_message']==="false") ) {
+          notify(payload.title, function(){
+            if ( payload.link ){
+              window.open(payload.link);
+            } 
+          });
+        }
         break;
     }
   }
@@ -86,3 +104,13 @@ chrome.notifications.onClicked.addListener(function(notificationId){
  *
  */
 // chrome.app.getDetails().version
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  switch (request.cmd) {
+    case 'register_token':
+      registerToken();
+      break;
+    case 'post_fbevent':
+      break;
+  }
+});
