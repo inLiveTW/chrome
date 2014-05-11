@@ -3,6 +3,14 @@ angular.module('starter.controllers', [])
 .controller('LiveCtrl', function($scope, $ionicLoading, $ionicPopup, Live) {
   $scope.lives = [];
   $scope.title = '直播';
+  $scope.rightButtons = [
+    {
+      type: 'icon-right ion-refresh',
+      tap: function(e) {
+        fetch('reload');
+      }
+    }
+  ];
 
   $scope.setLocation = function (live) {
     if ( live.location ) {
@@ -35,11 +43,11 @@ angular.module('starter.controllers', [])
   }
 
   var fetch;
-  (fetch = function () {
+  (fetch = function (cmd) {
     var logging = $ionicLoading.show({
       'content': '掃描中...'
     });
-    Live.fetch(function (err, list) {
+    Live[cmd](function (err, list) {
       $scope.lives = list;
       logging.hide();
       if (err) {
@@ -49,33 +57,41 @@ angular.module('starter.controllers', [])
           'okText': '重試'
         }).then(function(res) {
           if (res) {
-            fetch();
+            fetch(cmd);
           }
         });
       }
     });
-  })();
+  })('fetch');
 })
 
 .controller('ChannelCtrl', function($scope, $location, $ionicLoading, $ionicPopup, Channel) {
   $scope.channels = [];
   $scope.title = '頻道';
-  $scope.rightButtons = [
+  $scope.leftButtons = [
     {
       content: '直播',
-      type: 'icon-right ion-social-rss',
+      type: 'icon-left ion-ios7-arrow-left',
       tap: function(e) {
         $location.path("#/tab/live");
       }
     }
   ];
+  $scope.rightButtons = [
+    {
+      type: 'icon-right ion-refresh',
+      tap: function(e) {
+        fetch('reload');
+      }
+    }
+  ];
 
   var fetch;
-  ( fetch = function () {
+  ( fetch = function (cmd) {
     var logging = $ionicLoading.show({
       'content': '更新中...'
     });
-    Channel.fetch(function (err, list) {
+    Channel[cmd](function (err, list) {
       $scope.channels = list;
       logging.hide();
       if (err) {
@@ -86,57 +102,48 @@ angular.module('starter.controllers', [])
         });
         confirmPopup.then(function(res) {
           if (res) {
-            fetch();
+            fetch(cmd);
           }
         });
       }
     });
-  })();
+  })('fetch');
 })
 
-.controller('EventCtrl', function($scope, $http, $ionicLoading, $ionicPopup) {
+.controller('EventCtrl', function($scope, $http, $ionicLoading, $ionicPopup, Event) {
   $scope.events = [];
-  var fetchList = function () {
-    var logging = $ionicLoading.show({
-      content: '載入中...'
-    });
-    $http({
-      method: 'GET',
-      url: 'https://livelink.firebaseio.com/event/.json',
-      cache: false
-    })
-    .success(function(data, status, headers, config) {
-      logging.hide();
-      var temp = [];
 
-      if (typeof data === 'object') {
-        for (key in data) {
-          data[key].sortKey = new Date(data[key].start).getTime();
-          temp.push(data[key]);
-        }
+  $scope.rightButtons = [
+    {
+      type: 'icon-right ion-refresh',
+      tap: function(e) {
+        fetch('reload');
       }
-      temp.sort(function(x,y){
-        return x.sortKey > y.sortKey ? 1 : -1;
-      });
-      $scope.events = temp;
-    })
-    .error(function(data, status, headers, config) {
-      logging.hide();
-      var confirmPopup = $ionicPopup.confirm({
-        'title': '連線異常, 是否重試？',
-        'cancelText': '取消',
-        'okText': '重試'
-      });
-      confirmPopup.then(function(res) {
-        if(res) {
-          fetchList();
-        }
-      });
+    }
+  ];
+  
+  var fetch;
+  ( fetch = function (cmd) {
+    var logging = $ionicLoading.show({
+      'content': '載入中...'
     });
-  }
-
-  fetchList();
-
+    Event[cmd](function (err, list) {
+      $scope.events = list;
+      logging.hide();
+      if (err) {
+        var confirmPopup = $ionicPopup.confirm({
+          'title': '連線異常, 是否重試？',
+          'cancelText': '取消',
+          'okText': '重試'
+        });
+        confirmPopup.then(function(res) {
+          if (res) {
+            fetch(cmd);
+          }
+        });
+      }
+    });
+  })('fetch');
 })
 
 .controller('SettingCtrl', function($scope, $http, $ionicLoading, $ionicPopup, PushService) {

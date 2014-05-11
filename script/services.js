@@ -92,13 +92,40 @@ angular.module('starter.services', [])
   }
 })
 
-.factory('Event', function () {
+.factory('Event', function ($http) {
+  var cache = null;
   return {
-    setLocation: function (location) {
-
+    fetch: function (cb) {
+      if ( cache !== null ) {
+        cb && cb(null, cache);
+      }else{
+        this.reload(cb);
+      }
     },
-    like: function (vuid) {
+    reload: function (cb) {
+      cache = [];
+      $http({
+        'method': 'GET',
+        'url': 'https://livelink.firebaseio.com/event/.json',
+        'cache': false
+      })
+      .success( function (data) {
+        var cache = [];
 
+        if (typeof data === 'object') {
+          for (key in data) {
+            data[key].sortKey = new Date(data[key].start).getTime();
+            cache.push(data[key]);
+          }
+        }
+        cache.sort(function(x,y){
+          return x.sortKey > y.sortKey ? 1 : -1;
+        });
+        cb && cb(null, cache);
+      })
+      .error( function (data, status) {
+        cb && cb(status || true, cache);
+      });
     }
   }
 })
