@@ -1,46 +1,34 @@
 angular.module('starter.controllers', [])
 
-.controller('LiveCtrl', function($scope, $http, $ionicLoading, $ionicPopup) {
+.controller('LiveCtrl', function($scope, $ionicLoading, $ionicPopup, Live) {
   $scope.lives = [];
   $scope.title = '直播';
 
-  var fetchList = function () {
+  var fetch;
+  (fetch = function () {
     var logging = $ionicLoading.show({
-      content: '掃描中...'
+      'content': '掃描中...'
     });
-    $http({
-      method: 'GET',
-      url: 'https://livelink.firebaseio.com/live/.json',
-      cache: false
-    })
-    .success(function(data, status, headers, config) {
-        logging.hide();
-        if (typeof data === 'object') {
-          for (key in data) {
-            $scope.lives.push(data[key]);
-          }
-        }
-    })
-    .error(function(data, status, headers, config) {
+    Live.fetch(function (err, list) {
+      $scope.lives = list;
       logging.hide();
-       var confirmPopup = $ionicPopup.confirm({
-         'title': '連線異常, 是否重試？',
-         'cancelText': '取消',
-         'okText': '重試'
-       });
-       confirmPopup.then(function(res) {
-         if(res) {
-          fetchList();
-         }
-       });
+      if (err) {
+        var confirmPopup = $ionicPopup.confirm({
+          'title': '連線異常, 是否重試？',
+          'cancelText': '取消',
+          'okText': '重試'
+        });
+        confirmPopup.then(function(res) {
+          if (res) {
+            fetch();
+          }
+        });
+      }
     });
-  }
-
-  fetchList();
-
+  })();
 })
 
-.controller('ChannelCtrl', function($scope, $http, $location, $ionicLoading, $ionicPopup) {
+.controller('ChannelCtrl', function($scope, $location, $ionicLoading, $ionicPopup, Channel) {
   $scope.channels = [];
   $scope.title = '頻道';
   $scope.rightButtons = [
@@ -53,36 +41,28 @@ angular.module('starter.controllers', [])
     }
   ];
 
-  var fetchList = function () {
+  var fetch;
+  ( fetch = function () {
     var logging = $ionicLoading.show({
-      content: '更新中...'
+      'content': '更新中...'
     });
-    $http({
-      method: 'GET',
-      url: 'https://g0v.github.io/liveext/channel.json',
-      cache: false
-    })
-    .success(function(data, status, headers, config) {
+    Channel.fetch(function (err, list) {
+      $scope.channels = list;
       logging.hide();
-      $scope.channels = data;
-    })
-    .error(function(data, status, headers, config) {
-      logging.hide();
-       var confirmPopup = $ionicPopup.confirm({
-         'title': '連線異常, 是否重試？',
-         'cancelText': '取消',
-         'okText': '重試'
-       });
-       confirmPopup.then(function(res) {
-         if(res) {
-          fetchList();
-         }
-       });
+      if (err) {
+        var confirmPopup = $ionicPopup.confirm({
+          'title': '連線異常, 是否重試？',
+          'cancelText': '取消',
+          'okText': '重試'
+        });
+        confirmPopup.then(function(res) {
+          if (res) {
+            fetch();
+          }
+        });
+      }
     });
-  }
-  
-  fetchList();
-
+  })();
 })
 
 .controller('EventCtrl', function($scope, $http, $ionicLoading, $ionicPopup) {

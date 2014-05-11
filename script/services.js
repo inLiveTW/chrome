@@ -1,6 +1,87 @@
 angular.module('starter.services', [])
 
-.factory('PushService', function() {
+.factory('Live', function ($http) {
+  var cache = null;
+  return {
+    fetch: function (cb) {
+      if ( cache !== null ) {
+        cb && cb(null, cache);
+      }else{
+        this.reload(cb);
+      }
+    },
+    reload: function (cb) {
+      cache = [];
+      $http({
+        'method': 'GET',
+        'url': 'https://livelink.firebaseio.com/live/.json',
+        'cache': false
+      })
+      .success( function (data) {
+          if (typeof data === 'object') {
+            for (key in data) {
+              cache.push(data[key]);
+            }
+          }
+          cb && cb(null, cache);
+      })
+      .error( function (data, status) {
+        cb && cb(status || true, cache);
+      });
+    },
+    setLocation: function (location) {
+
+    }
+  }
+})
+
+.factory('Channel', function ($http) {
+  var cache = null;
+  return {
+    fetch: function (cb) {
+      if ( cache !== null ) {
+        cb && cb(null, cache);
+      }else{
+        this.reload(cb);
+      }
+    },
+    reload: function (cb) {
+      cache = [];
+      $http({
+        'method': 'GET',
+        'url': 'https://g0v.github.io/liveext/channel.json',
+        'cache': false
+      })
+      .success( function (data) {
+        if (typeof data === 'object') {
+          for (key in data) {
+            cache.push(data[key]);
+          }
+        }
+        cb && cb(null, cache);
+      })
+      .error( function (data, status) {
+        cb && cb(status || true, cache);
+      });
+    },
+    like: function (vuid) {
+
+    }
+  }
+})
+
+.factory('Event', function () {
+  return {
+    setLocation: function (location) {
+
+    },
+    like: function (vuid) {
+
+    }
+  }
+})
+
+.factory('PushService', function () {
   var storage = window.localStorage;
   var pushSync;
   var updateTimer;
@@ -39,7 +120,6 @@ angular.module('starter.services', [])
         }else{
           if ( device ) {
             registerToken();
-            alert('isDevice');
           }else{
             chrome.runtime.sendMessage({cmd: "register_token"});
           }
