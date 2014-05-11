@@ -4,6 +4,36 @@ angular.module('starter.controllers', [])
   $scope.lives = [];
   $scope.title = '直播';
 
+  $scope.setLocation = function (live) {
+    if ( live.location ) {
+        $ionicPopup.confirm({
+          'title': live.location + ' 正確嗎？',
+          'cancelText': '錯誤',
+          'okText': '正確'
+        }).then(function(res) {
+          if ( res === true ) {
+            Live.setLocation(live.vuid, live.location);
+          }else{
+            live.location = null;
+            $scope.setLocation(live);
+          }
+        });
+    }else{
+      $ionicPopup.prompt({
+        'title': '知道在哪直播嗎？',
+        'inputType': 'text',
+        'inputPlaceholder': '地標 / 地址 / 行動',
+        'cancelText': '取消',
+        'okText': '設定'
+      }).then(function(res) {
+        if ( res !== false ) {
+            Live.setLocation(live.vuid, res);
+            live.location = res;
+        }
+      });
+    }
+  }
+
   var fetch;
   (fetch = function () {
     var logging = $ionicLoading.show({
@@ -13,12 +43,11 @@ angular.module('starter.controllers', [])
       $scope.lives = list;
       logging.hide();
       if (err) {
-        var confirmPopup = $ionicPopup.confirm({
+        $ionicPopup.confirm({
           'title': '連線異常, 是否重試？',
           'cancelText': '取消',
           'okText': '重試'
-        });
-        confirmPopup.then(function(res) {
+        }).then(function(res) {
           if (res) {
             fetch();
           }

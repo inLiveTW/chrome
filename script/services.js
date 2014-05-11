@@ -2,6 +2,7 @@ angular.module('starter.services', [])
 
 .factory('Live', function ($http) {
   var cache = null;
+  var storage = window.localStorage;
   return {
     fetch: function (cb) {
       if ( cache !== null ) {
@@ -18,10 +19,17 @@ angular.module('starter.services', [])
         'cache': false
       })
       .success( function (data) {
+          var location = JSON.parse(storage['location'] || "{}");
+          var new_location = {};
           if (typeof data === 'object') {
             for (key in data) {
+              if (location[data[key]['vuid']]) {
+                data[key]['location'] = location[data[key]['vuid']];
+                new_location[data[key]['vuid']] = location[data[key]['vuid']];
+              }
               cache.push(data[key]);
             }
+            storage['location'] = JSON.stringify(new_location);
           }
           cb && cb(null, cache);
       })
@@ -29,8 +37,22 @@ angular.module('starter.services', [])
         cb && cb(status || true, cache);
       });
     },
-    setLocation: function (location) {
-
+    setLocation: function (vuid, location) {
+      var data = JSON.parse(storage['location'] || "{}");
+      if (data[vuid] != location) {
+        postParse('live_location', {
+          'vuid': vuid,
+          'location': location
+        }, function (err, obj) {
+          if (err) {
+            console.log('save token error: ', error);
+          }else{
+            console.log('save '+vuid+':', location, 'obj id:', obj.id);
+          }
+        });
+      }
+      data[vuid] = location;
+      storage['location'] = JSON.stringify(data);
     }
   }
 })
@@ -49,7 +71,7 @@ angular.module('starter.services', [])
       cache = [];
       $http({
         'method': 'GET',
-        'url': 'https://g0v.github.io/liveext/channel.json',
+        'url': 'https://livelink.firebaseio.com/channel/.json',
         'cache': false
       })
       .success( function (data) {

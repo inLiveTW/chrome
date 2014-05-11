@@ -8,10 +8,10 @@
   <ion-content has-header="true" has-tabs="true">
     <div class="card" ng-repeat="live in lives">
 
-      <div class="item item-avatar">
+      <div class="item item-avatar" ng-click="setLocation(live)">
         <img src="{{live.logo}}">
         <h2>{{live.title}}</h2>
-        <p>{{live.vid}}</p>
+        <p>{{live.location ? live.location : '知道在哪直播嗎？'}}</p>
       </div>
 
       <a class="item item-icon-left assertive" ng-click="open('{{live.url}}')">
