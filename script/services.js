@@ -96,6 +96,7 @@ angular.module('starter.services', [])
   var cache = null;
   return {
     fetch: function (cb) {
+      console.log(cache);
       if ( cache !== null ) {
         cb && cb(null, cache);
       }else{
@@ -110,8 +111,6 @@ angular.module('starter.services', [])
         'cache': false
       })
       .success( function (data) {
-        var cache = [];
-
         if (typeof data === 'object') {
           for (key in data) {
             data[key].sortKey = new Date(data[key].start).getTime();
