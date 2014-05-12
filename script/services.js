@@ -167,7 +167,7 @@ angular.module('starter.services', [])
         if ( first ) {
           first = false;
         }else{
-          if ( device ) {
+          if ( typeof device === 'undefined' ) {
             registerToken();
           }else{
             chrome.runtime.sendMessage({cmd: "register_token"});
