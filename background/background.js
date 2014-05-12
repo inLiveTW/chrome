@@ -80,7 +80,7 @@ function notify(msg, click){
     type: "basic",
     title: "LiveTW",
     message: msg,
-    iconUrl: chrome.extension.getURL('image/icon/LiveTW.png')
+    iconUrl: chrome.extension.getURL('image/icon/LiveTW128.png')
   }
   var notificationId = 'push_'+btoa(encodeURIComponent(escape(msg)));
   if ( typeof click == 'function' ) {
@@ -90,7 +90,7 @@ function notify(msg, click){
     setTimeout(function(){
       chrome.notifications.clear(notificationId,function(){});
       notify_listener[notificationId] = undefined;
-    }, 5000);
+    }, 18000);
   });
   
 }
