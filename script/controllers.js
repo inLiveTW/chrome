@@ -109,8 +109,97 @@ angular.module('starter.controllers', [])
     });
   })('fetch');
 })
+.controller('NewsCtrl', function($scope, $location, $ionicLoading, $ionicPopup, News) {
+  $scope.news = [];
 
-.controller('EventCtrl', function($scope, $http, $ionicLoading, $ionicPopup, Event) {
+  $scope.rightButtons = [
+    {
+      type: 'icon-right ion-refresh',
+      tap: function(e) {
+        fetch('reload');
+      }
+    }
+  ];
+
+  $scope.report = function (newsId) {
+      $location.path("#/tab/news/"+newsId);
+  }
+  
+  var fetch;
+  ( fetch = function (cmd) {
+    var logging = $ionicLoading.show({
+      'content': '連線中...'
+    });
+    News[cmd](function (err, data) {
+      var news = [];
+      for (key in data) {
+        news.push(data[key]);
+      };
+      $scope.news = news;
+      logging.hide();
+      if (err) {
+        var confirmPopup = $ionicPopup.confirm({
+          'title': '連線異常, 是否重試？',
+          'cancelText': '取消',
+          'okText': '重試'
+        });
+        confirmPopup.then(function(res) {
+          if (res) {
+            fetch(cmd);
+          }
+        });
+      }
+    });
+  })('fetch');
+})
+.controller('ReportCtrl', function($scope, $ionicLoading, $ionicPopup, $state, $stateParams, News) {
+  $scope.reports = [];
+  $scope.id = 0;
+  $scope.title = '報導';
+  $scope.leftButtons = [
+    {
+      content: '報導',
+      type: 'icon-left ion-ios7-arrow-left',
+      tap: function(e) {
+        $state.go('tab.news');
+      }
+    }
+  ];
+  $scope.rightButtons = [
+    {
+      type: 'icon-right ion-refresh',
+      tap: function(e) {
+        fetch('reload');
+      }
+    }
+  ];
+  
+  var fetch;
+  ( fetch = function (cmd) {
+    var logging = $ionicLoading.show({
+      'content': '連線中...'
+    });
+    News[cmd](function (err, data) {
+      $scope.reports = data[$stateParams.id].post;
+      $scope.id = $stateParams.id;
+      $scope.title = data[$stateParams.id].name;
+      logging.hide();
+      if (err) {
+        var confirmPopup = $ionicPopup.confirm({
+          'title': '連線異常, 是否重試？',
+          'cancelText': '取消',
+          'okText': '重試'
+        });
+        confirmPopup.then(function(res) {
+          if (res) {
+            fetch(cmd);
+          }
+        });
+      }
+    });
+  })('fetch');
+})
+.controller('EventCtrl', function($scope, $ionicLoading, $ionicPopup, Event) {
   $scope.events = [];
 
   $scope.rightButtons = [
@@ -146,7 +235,7 @@ angular.module('starter.controllers', [])
   })('fetch');
 })
 
-.controller('SettingCtrl', function($scope, $http, $ionicLoading, $ionicPopup, PushService) {
+.controller('SettingCtrl', function($scope, $ionicLoading, $ionicPopup, PushService) {
   $scope.push = {
     'live': PushService.getLive(),
     'event': PushService.getEvent(),

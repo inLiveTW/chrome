@@ -107,11 +107,26 @@ chrome.notifications.onClicked.addListener(function(notificationId){
 // chrome.app.getDetails().version
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  var storage = window.localStorage;
   switch (request.cmd) {
     case 'register_token':
       registerToken();
       break;
     case 'post_fbevent':
+      var events = JSON.parse(storage['fbevent'] || "{}");
+      var eid = request.eid;
+      if ( eid && !events[eid] ){
+        events[eid] = 1;
+        storage['fbevent'] = JSON.stringify(events);
+        postParse('fbevent', {
+          'eid': request.eid,
+          'from': request.from
+        })
+      }
+      break;
+    case 'get_fbevent':
+      var events = JSON.parse(storage['fbevent'] || "{}");
+      sendResponse(request.eid && events[request.eid] ? true : false);
       break;
   }
 });

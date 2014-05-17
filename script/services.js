@@ -96,7 +96,6 @@ angular.module('starter.services', [])
   var cache = null;
   return {
     fetch: function (cb) {
-      console.log(cache);
       if ( cache !== null ) {
         cb && cb(null, cache);
       }else{
@@ -120,6 +119,36 @@ angular.module('starter.services', [])
         cache.sort(function(x,y){
           return x.sortKey > y.sortKey ? 1 : -1;
         });
+        cb && cb(null, cache);
+      })
+      .error( function (data, status) {
+        cb && cb(status || true, cache);
+      });
+    }
+  }
+})
+
+.factory('News', function ($http) {
+  var cache = null;
+  return {
+    fetch: function (cb) {
+      if ( cache !== null ) {
+        cb && cb(null, cache);
+      }else{
+        this.reload(cb);
+      }
+    },
+    reload: function (cb) {
+      cache = [];
+      $http({
+        'method': 'GET',
+        'url': 'https://livelink.firebaseio.com/news/.json',
+        'cache': false
+      })
+      .success( function (data) {
+        if (typeof data === 'object') {
+          cache = data;
+        }
         cb && cb(null, cache);
       })
       .error( function (data, status) {

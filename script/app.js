@@ -27,6 +27,24 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
         }
       }
     })
+    .state('tab.news', {
+      url: '/news',
+      views: {
+        'news-tab': {
+          templateUrl: 'template/news.html',
+          controller: 'NewsCtrl'
+        }
+      }
+    })
+    .state('tab.report', {
+      url: '/news/:id',
+      views: {
+        'news-tab': {
+          templateUrl: 'template/report.html',
+          controller: 'ReportCtrl'
+        }
+      }
+    })
     .state('tab.event', {
       url: '/event',
       views: {
@@ -53,8 +71,46 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
 
 .filter('toDateTime', function(){
   return function(str){
-    return str.replace(/\+.*/gi, '').replace(/[^0-9:-]/gi, ' ');
+    var time = new Date(str);
+    return time.toLocaleDateString() + ' ' + time.toLocaleTimeString();
   };
+})
+
+.filter('maxContent', function(){
+  return function(str){
+    var results = "";
+    var length = 0;
+
+    for (var n = 0; n < str.length; n++) {
+        var charCode = str.charCodeAt(n);
+        if (charCode < 128) {
+            length += 1;
+        } else if (charCode < 2048) {
+            length += 2;
+        } else if (charCode < 65536) {
+            length += 3;
+        } else if (charCode < 2097152) {
+            length += 4;
+        } else if (charCode < 67108864) {
+            length += 5;
+        } else {
+            length += 6;
+        }
+        results += str[n];
+        if (length > 180) {
+          results += "...";
+          break;
+        }
+    }
+
+    return results;
+  };
+})
+
+.filter('nl2br', function(){
+  return function (str) {
+    return str.replace(/\n/gi,"<br/>");
+  }
 })
 
 .run(function($rootScope){
