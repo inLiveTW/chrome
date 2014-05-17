@@ -7,11 +7,11 @@
   <ion-content has-header="true" has-tabs="true">
     <div ng-repeat="report in reports" class="list card">
 
-      <div class="item item-body">
+      <div class="item item-body" ng-click="open(report.link);">
         <img class="full-image" src="{{report.picture}}" ng-show="report.picture">
         <p ng-bind-html="report.message | nl2br" ng-class="{'no-image-message': !report.picture}"></p>
         <p>
-          <a href="#" class="subdued">{{report.datetime | toDateTime}}</a>
+          <span class="subdued">{{report.datetime | toDateTime}}</span>
         </p>
       </div>
 
