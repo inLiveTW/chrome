@@ -72,7 +72,8 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
 .filter('toDateTime', function(){
   return function(str){
     var time = new Date(str);
-    return time.toLocaleDateString() + ' ' + time.toLocaleTimeString();
+    time.setHours(time.getHours()+8);
+    return time.toISOString().replace('T',' ').replace(/\.\w+/,'');
   };
 })
 

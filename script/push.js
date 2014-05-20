@@ -70,10 +70,10 @@ function onDeviceReady(){
       registerToken();
     }
     function errorHandler (error) {
-      alert('error = ' + error);
+      console.log('error = ' + error);
     }
   }catch(e){
-    alert(e.message);
+    console.log(e.message);
   }
 }
 

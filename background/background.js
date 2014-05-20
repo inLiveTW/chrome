@@ -44,29 +44,22 @@ chrome.pushMessaging.onMessage.addListener(function(message){
     switch(payload.type) {
       case 'live':
         if ( !(localStorage && localStorage['push_live']==="false") ) {
-          notify("現正直播 - " + payload.title, function(){
-            if ( payload.link ){
-              window.open(payload.link);
-            } 
-          });
+          notify("『現正直播』 - " + payload.title, payload.message, payload.link);
         }
         break;
       case 'event':
         if ( !(localStorage && localStorage['push_event']==="false") ) {
-          notify("事件通知 - " + payload.title, function(){
-            if ( payload.link ){
-              window.open(payload.link);
-            } 
-          });
+          notify("『事件通知』 - " + payload.title, payload.message, payload.link);
         }
         break;
       case 'message':
         if ( !(localStorage && localStorage['push_message']==="false") ) {
-          notify(payload.title, function(){
-            if ( payload.link ){
-              window.open(payload.link);
-            } 
-          });
+          notify("『即時訊息』 - " + payload.title, payload.message, payload.link);
+        }
+        break;
+      case 'reporter':
+        if ( !(localStorage && localStorage['push_reporter']==="false") ) {
+          notify("『公民記者』 - " + payload.title, payload.message, payload.link);
         }
         break;
     }
@@ -75,31 +68,19 @@ chrome.pushMessaging.onMessage.addListener(function(message){
 
 var notify_listener = {};
 
-function notify(msg, click){
-  var opt = {
-    type: "basic",
-    title: "LiveTW",
-    message: msg,
-    iconUrl: chrome.extension.getURL('image/icon/LiveTW128.png')
-  }
-  var notificationId = 'push_'+btoa(encodeURIComponent(escape(msg)));
-  if ( typeof click == 'function' ) {
-    notify_listener[notificationId] = click;
-  }
-  chrome.notifications.create(notificationId, opt, function(notificationId){
-    setTimeout(function(){
-      chrome.notifications.clear(notificationId,function(){});
-      notify_listener[notificationId] = undefined;
-    }, 18000);
-  });
-  
+function notify(title, msg, link){
+  var notification = window.webkitNotifications.createNotification(
+    chrome.extension.getURL('image/icon/LiveTW128.png'),
+    '' + title,
+    '' + msg
+  );
+  notification.onclick = function(){
+    if ( link ) {
+      window.open(link);
+    }
+  };
+  notification.show();
 }
-
-chrome.notifications.onClicked.addListener(function(notificationId){
-  if ( notify_listener[notificationId] && typeof notify_listener[notificationId] == 'function' ) {
-    notify_listener[notificationId]();
-  }
-});
 
 /**
  *

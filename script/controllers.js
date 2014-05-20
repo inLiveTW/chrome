@@ -239,9 +239,11 @@ angular.module('starter.controllers', [])
   $scope.push = {
     'live': PushService.getLive(),
     'event': PushService.getEvent(),
-    'message': PushService.getMessage()
+    'message': PushService.getMessage(),
+    'reporter': PushService.getReporter()
   };
   $scope.$watch('push.live', PushService.setLive);
   $scope.$watch('push.event', PushService.setEvent);
   $scope.$watch('push.message', PushService.setMessage);
+  $scope.$watch('push.reporter', PushService.setReporter);
 });

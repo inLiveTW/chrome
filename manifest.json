@@ -1,11 +1,14 @@
 {
   "name": "LiveTW",
   "manifest_version": 2,
-  "version": "0.3.12",
+  "version": "0.3.17",
   "browser_action": {
     "default_icon": "image/icon/LiveTW.png",
     "default_title": "LiveTW",
     "default_popup": "index.html"
+  },
+  "icons": {
+    "128": "image/icon/LiveTW128.png"
   },
   "background": {
     "scripts": ["plugin/parse.js", "config.js", "script/parse.js", "background/background.js"]

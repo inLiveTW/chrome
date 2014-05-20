@@ -173,6 +173,9 @@ angular.module('starter.services', [])
     getMessage: function(){
       return storage['push_message']==="false" ? false : true;
     },
+    getReporter: function(){
+      return storage['push_reporter']==="false" ? false : true;
+    },
     setLive: function(val){
       storage['push_live'] = (val==false) ? false : true;
       pushSync.updateToServer();
@@ -183,6 +186,10 @@ angular.module('starter.services', [])
     },
     setMessage: function(val){
       storage['push_message'] = (val==false) ? false : true;
+      pushSync.updateToServer();
+    },
+    setMessage: function(val){
+      storage['push_reporter'] = (val==false) ? false : true;
       pushSync.updateToServer();
     },
     updateToServer: function()
