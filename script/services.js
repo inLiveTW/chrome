@@ -158,6 +158,37 @@ angular.module('starter.services', [])
   }
 })
 
+.factory('User', function () {
+  return {
+    login: function (username, password, cb) {
+      Parse.User.logIn(username, password, {
+        success: function(user) {
+          console.log(user);
+          cb && cb(true, user);
+        },
+        error: function(user, error) {
+          if ( error && error.code=='101' ) {
+            cb && cb(false);
+          } else {
+            cb && cb();
+          }
+        }
+      });
+    },
+    current: function (cb) {
+      cb && cb(Parse.User.current());
+    },
+    logout: function () {
+      Parse.User.logOut();
+    }
+  }
+})
+
+.factory('Push', function () {
+  return {
+  }
+})
+
 .factory('PushService', function () {
   var storage = window.localStorage;
   var pushSync;

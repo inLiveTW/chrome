@@ -152,6 +152,7 @@ angular.module('starter.controllers', [])
     });
   })('fetch');
 })
+
 .controller('ReportCtrl', function($scope, $ionicLoading, $ionicPopup, $state, $stateParams, News) {
   $scope.reports = [];
   $scope.id = 0;
@@ -199,6 +200,7 @@ angular.module('starter.controllers', [])
     });
   })('fetch');
 })
+
 .controller('EventCtrl', function($scope, $ionicLoading, $ionicPopup, Event) {
   $scope.events = [];
 
@@ -233,6 +235,50 @@ angular.module('starter.controllers', [])
       }
     });
   })('fetch');
+})
+
+.controller('ReporterCtrl', function($scope, $state, $ionicLoading, $ionicPopup, User) {
+  var storage = window.localStorage;
+
+  $scope.user = {
+    'username': storage['usr'],
+    'password': storage['pwd']
+  }
+
+  $scope.login = function(user){
+    $scope.logging = $ionicLoading.show({
+      content: 'Login...',
+    });
+    User.login(user.username, user.password, function(status, info) {
+      if ( status === true ) {
+          storage['usr'] = user.username;
+          storage['pwd'] = user.password;
+          $state.go('tab.push');
+      } else if ( status === false ) {
+          $ionicPopup.alert({
+            title: '登入失敗',
+            content: '帳號/密碼 錯誤！',
+          });
+      } else {
+        $ionicPopup.alert({
+          title: '登入失敗',
+          content: '網路連線異常！',
+        });
+      }
+      $scope.logging.hide();
+    });
+  }
+
+  User.current( function (user) {
+    if ( user ) {
+      $state.go('tab.push');
+    } else if ( $scope.user.username && $scope.user.password ) {
+      $scope.login($scope.user);
+    }
+  });
+})
+
+.controller('PushCtrl', function($scope, $ionicLoading, $ionicPopup, User) {
 })
 
 .controller('SettingCtrl', function($scope, $ionicLoading, $ionicPopup, PushService) {

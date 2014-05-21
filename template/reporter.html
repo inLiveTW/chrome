@@ -1,0 +1,31 @@
+<ion-nav-bar
+  type="bar-assertive"
+  animation="nav-title-slide-ios7" 
+  back-button-type="button-icon button-clear" 
+  back-button-icon="ion-ios7-arrow-back">
+</ion-nav-bar>
+<ion-view title="身份驗證" hide-back-button="true" right-buttons="rightButtons">
+  <ion-content has-header="true" has-tabs="true">
+    <div class="card">
+      <div class="item item-text-wrap">
+        想加入公民記者嗎？<br/>
+        歡迎Email至 <a href="mailto:yutin@inlive.tw">yutin@inlive.tw</a>
+      </div>
+    </div>
+
+    <form name="loginForm" ng-submit="login(user)">
+      <div class="list list-inset">
+        <label class="item item-input">
+          <span class="input-label">帳號</span>
+          <input type="text" name="username" ng-model="user.username" required>
+        </label>
+        <label class="item item-input">
+          <span class="input-label">密碼</span>
+          <input type="password" name="password" ng-model="user.password" required>
+        </label>
+        <button ng-disabled="loginForm.$invalid" type="submit" class="button button-positive button-block">登入</button>
+      </div>
+    </form>
+
+  </ion-content>
+</ion-view>

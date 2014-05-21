@@ -54,6 +54,24 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
         }
       }
     })
+    .state('tab.reporter', {
+      url: '/reporter',
+      views: {
+        'reporter-tab': {
+          templateUrl: 'template/reporter.html',
+          controller: 'ReporterCtrl'
+        }
+      }
+    })
+    .state('tab.push', {
+      url: '/push',
+      views: {
+        'reporter-tab': {
+          templateUrl: 'template/push.html',
+          controller: 'ReporterCtrl'
+        }
+      }
+    })
     .state('tab.setting', {
       url: '/setting',
       views: {
