@@ -1,0 +1,57 @@
+<ion-nav-bar
+        type="bar-assertive"
+        animation="nav-title-slide-ios7" 
+        back-button-type="button-icon button-clear" 
+        back-button-icon="ion-ios7-arrow-back"></ion-nav-bar>
+<ion-view title="通知設定" hide-back-button="true">
+  <ion-content has-header="true" has-tabs="true">
+    <ul class="list">
+      <li class="item item-toggle">
+         接收『即時訊息』
+         <label class="toggle toggle-assertive">
+           <input type="checkbox" ng-model="push.message">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+      </li>
+      <li class="item item-toggle">
+         接收『節目開播』
+         <label class="toggle toggle-assertive">
+           <input type="checkbox" ng-model="push.live">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+      </li>
+      <li class="item item-toggle">
+         接收『事件提醒』
+         <label class="toggle toggle-assertive">
+           <input type="checkbox" ng-model="push.event">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+      </li>
+      <li class="item item-toggle">
+         接收『公民記者』
+         <label class="toggle toggle-assertive">
+           <input type="checkbox" ng-model="push.reporter">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+      </li>
+    </ul>
+
+    <div class="card">
+      <div class="item item-text-wrap">
+        DeviceToken是：<br/>
+        <span style="font-size:10px"></span>
+      </div>
+    </div>
+
+    <br />
+
+  </ion-content>
+</ion-view>

@@ -246,7 +246,7 @@ angular.module('starter.controllers', [])
   }
 
   $scope.login = function(user){
-    $scope.logging = $ionicLoading.show({
+    var logging = $ionicLoading.show({
       content: 'Login...',
     });
     User.login(user.username, user.password, function(status, info) {
@@ -265,7 +265,7 @@ angular.module('starter.controllers', [])
           content: '網路連線異常！',
         });
       }
-      $scope.logging.hide();
+      logging.hide();
     });
   }
 
@@ -278,7 +278,35 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('PushCtrl', function($scope, $ionicLoading, $ionicPopup, User) {
+.controller('PushCtrl', function($scope, $ionicLoading, $ionicPopup, User, Push) {
+  $scope.name = '公民記者';
+  User.current ( function (user) {
+    if ( user ) {
+      $scope.name = user.get('name');
+    }
+  });
+  $scope.push = function (message) {
+    var logging = $ionicLoading.show({
+      'content': '發送中'
+    });
+    Push.send(message, function (err) {
+      if (err===true) {
+        $ionicPopup.alert({
+          title: '無法驗證身份'
+        });
+      } else if (err) {
+        $ionicPopup.alert({
+          title: '發送異常'
+        });
+      } else {
+        $ionicPopup.alert({
+          title: '發送成功'
+        });
+        $scope.message = '';
+      }
+      logging.hide();
+    });
+  }
 })
 
 .controller('SettingCtrl', function($scope, $ionicLoading, $ionicPopup, PushService) {

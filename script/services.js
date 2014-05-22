@@ -184,8 +184,23 @@ angular.module('starter.services', [])
   }
 })
 
-.factory('Push', function () {
+.factory('Push', function (User) {
   return {
+    send: function (message, cb) {
+      User.current(function (user) {
+        if (user) {
+          postParse('push', {
+            'name': user.get('name'),
+            'message': message,
+            'start': new Date()
+          }, function (err) {
+            cb && cb(err);
+          });
+        }else{
+          cb && cb(true);
+        }
+      });
+    }
   }
 })
 
