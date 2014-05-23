@@ -18,13 +18,11 @@
       </a>
 
     </div>
-
+    
     <div class="card" ng-hide="events.length>0">
-      <a class="item item-icon-left" href="#/tab/live">
-        <i class="icon ion-grid"></i>
-        尚未接收到事件
-      </a>
-
+      <button class="button button-block icon-left ion-loop" ng-click="fetch('reload')">
+        點擊更新事件
+      </button>
     </div>
 
     <br />
