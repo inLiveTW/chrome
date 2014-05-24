@@ -57,7 +57,7 @@ angular.module('starter.controllers', [])
           'okText': '重試'
         }).then(function(res) {
           if (res) {
-            fetch(cmd);
+            fetch('reload');
           }
         });
       }
@@ -102,7 +102,7 @@ angular.module('starter.controllers', [])
         });
         confirmPopup.then(function(res) {
           if (res) {
-            fetch(cmd);
+            fetch('reload');
           }
         });
       }
@@ -145,7 +145,7 @@ angular.module('starter.controllers', [])
         });
         confirmPopup.then(function(res) {
           if (res) {
-            fetch(cmd);
+            fetch('reload');
           }
         });
       }
@@ -193,7 +193,7 @@ angular.module('starter.controllers', [])
         });
         confirmPopup.then(function(res) {
           if (res) {
-            fetch(cmd);
+            fetch('reload');
           }
         });
       }
@@ -229,7 +229,7 @@ angular.module('starter.controllers', [])
         });
         confirmPopup.then(function(res) {
           if (res) {
-            fetch(cmd);
+            fetch('reload');
           }
         });
       }
