@@ -309,7 +309,8 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('SettingCtrl', function($scope, $ionicLoading, $ionicPopup, PushService) {
+.controller('ListenCtrl', function($scope, $state, PushService) {
+
   $scope.push = {
     'live': PushService.getLive(),
     'event': PushService.getEvent(),
@@ -320,4 +321,18 @@ angular.module('starter.controllers', [])
   $scope.$watch('push.event', PushService.setEvent);
   $scope.$watch('push.message', PushService.setMessage);
   $scope.$watch('push.reporter', PushService.setReporter);
+
+  $scope.leftButtons = [
+    {
+      content: '設定',
+      type: 'icon-left ion-ios7-arrow-left',
+      tap: function(e) {
+        $state.go("tab.setting");
+      }
+    }
+  ];
+
+})
+
+.controller('SettingCtrl', function($scope) {
 });

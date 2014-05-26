@@ -81,6 +81,16 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
         }
       }
     })
+    .state('tab.listen', {
+      url: '/listen',
+      views: {
+        'setting-tab': {
+          templateUrl: 'template/listen.html',
+          controller: 'ListenCtrl'
+        }
+      }
+
+    });
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/live');
