@@ -309,6 +309,10 @@ angular.module('starter.controllers', [])
   }
 })
 
+
+.controller('SettingCtrl', function($scope) {
+})
+
 .controller('ListenCtrl', function($scope, $state, PushService) {
 
   $scope.push = {
@@ -334,5 +338,28 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('SettingCtrl', function($scope) {
+.controller('DeveloperCtrl', function($scope, $state, PushService) {
+  $scope.leftButtons = [
+    {
+      content: '設定',
+      type: 'icon-left ion-ios7-arrow-left',
+      tap: function(e) {
+        $state.go("tab.setting");
+      }
+    }
+  ];
+
+})
+
+.controller('NotificationCtrl', function($scope, $state, PushService) {
+  $scope.leftButtons = [
+    {
+      content: '設定',
+      type: 'icon-left ion-ios7-arrow-left',
+      tap: function(e) {
+        $state.go("tab.setting");
+      }
+    }
+  ];
+
 });

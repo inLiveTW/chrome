@@ -89,7 +89,24 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
           controller: 'ListenCtrl'
         }
       }
-
+    })
+    .state('tab.developer', {
+      url: '/developer',
+      views: {
+        'setting-tab': {
+          templateUrl: 'template/developer.html',
+          controller: 'DeveloperCtrl'
+        }
+      }
+    })
+    .state('tab.notification', {
+      url: '/notification',
+      views: {
+        'setting-tab': {
+          templateUrl: 'template/notification.html',
+          controller: 'NotificationCtrl'
+        }
+      }
     });
 
   // if none of the above states are matched, use this as the fallback
