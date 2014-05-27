@@ -43,7 +43,7 @@ angular.module('starter.controllers', [])
   }
 
   var fetch;
-  (fetch = function (cmd) {
+  ($scope.fetch = fetch = function (cmd) {
     var logging = $ionicLoading.show({
       'content': '掃描中...'
     });
@@ -57,7 +57,7 @@ angular.module('starter.controllers', [])
           'okText': '重試'
         }).then(function(res) {
           if (res) {
-            fetch(cmd);
+            fetch('reload');
           }
         });
       }
@@ -87,7 +87,7 @@ angular.module('starter.controllers', [])
   ];
 
   var fetch;
-  ( fetch = function (cmd) {
+  ( $scope.fetch = fetch = function (cmd) {
     var logging = $ionicLoading.show({
       'content': '更新中...'
     });
@@ -102,7 +102,7 @@ angular.module('starter.controllers', [])
         });
         confirmPopup.then(function(res) {
           if (res) {
-            fetch(cmd);
+            fetch('reload');
           }
         });
       }
@@ -126,7 +126,7 @@ angular.module('starter.controllers', [])
   }
   
   var fetch;
-  ( fetch = function (cmd) {
+  ( $scope.fetch = fetch = function (cmd) {
     var logging = $ionicLoading.show({
       'content': '連線中...'
     });
@@ -145,7 +145,7 @@ angular.module('starter.controllers', [])
         });
         confirmPopup.then(function(res) {
           if (res) {
-            fetch(cmd);
+            fetch('reload');
           }
         });
       }
@@ -175,7 +175,7 @@ angular.module('starter.controllers', [])
   ];
   
   var fetch;
-  ( fetch = function (cmd) {
+  ( $scope.fetch = fetch = function (cmd) {
     var logging = $ionicLoading.show({
       'content': '連線中...'
     });
@@ -192,7 +192,7 @@ angular.module('starter.controllers', [])
         });
         confirmPopup.then(function(res) {
           if (res) {
-            fetch(cmd);
+            fetch('reload');
           }
         });
       }
@@ -212,7 +212,7 @@ angular.module('starter.controllers', [])
   ];
   
   var fetch;
-  ( fetch = function (cmd) {
+  ( $scope.fetch = fetch = function (cmd) {
     var logging = $ionicLoading.show({
       'content': '載入中...'
     });
@@ -227,7 +227,7 @@ angular.module('starter.controllers', [])
         });
         confirmPopup.then(function(res) {
           if (res) {
-            fetch(cmd);
+            fetch('reload');
           }
         });
       }
