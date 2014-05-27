@@ -1,0 +1,31 @@
+<ion-nav-bar
+        type="bar-assertive"
+        animation="nav-title-slide-ios7" 
+        back-button-type="button-icon button-clear" 
+        back-button-icon="ion-ios7-arrow-back"></ion-nav-bar>
+<ion-view title="事件" hide-back-button="true" right-buttons="rightButtons">
+  <ion-content has-header="true" has-tabs="true">
+    <div class="card" ng-repeat="event in events">
+
+      <div class="item item-divider">
+        <h2>{{event.title}}</h2>
+        <p>{{event.start | toDateTime}}</p>
+      </div>
+
+      <a class="item item-icon-left assertive" ng-click="open('{{event.link}}')">
+        <i class="icon ion-forward"></i>
+        了解更多 {{event.type}}
+      </a>
+
+    </div>
+    
+    <div class="card" ng-hide="events.length>0">
+      <button class="button button-block icon-left ion-loop" ng-click="fetch('reload')">
+        點擊更新事件
+      </button>
+    </div>
+
+    <br />
+
+  </ion-content>
+</ion-view>

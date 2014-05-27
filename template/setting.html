@@ -1,0 +1,75 @@
+<ion-nav-bar
+        type="bar-assertive"
+        animation="nav-title-slide-ios7" 
+        back-button-type="button-icon button-clear" 
+        back-button-icon="ion-ios7-arrow-back"></ion-nav-bar>
+<ion-view title="設定" hide-back-button="true">
+  <ion-content has-header="true" has-tabs="true">
+    <ul class="list">
+      <li class="item item-toggle">
+         接收『節目開播』
+         <label class="toggle toggle-assertive">
+           <input type="checkbox" ng-model="push.live">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+      </li>
+      <li class="item item-toggle">
+         接收『事件提醒』
+         <label class="toggle toggle-assertive">
+           <input type="checkbox" ng-model="push.event">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+      </li>
+      <li class="item item-toggle">
+         接收『即時訊息』
+         <label class="toggle toggle-assertive">
+           <input type="checkbox" ng-model="push.message">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+      </li>
+      <li class="item item-toggle">
+         接收『公民記者』
+         <label class="toggle toggle-assertive">
+           <input type="checkbox" ng-model="push.reporter">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+      </li>
+      <a href="mailto:yutin@inlive.tw" target="_blank" class="item item-icon-left">
+        <i class="icon ion-flask"></i>
+        回報錯誤 yutin@inlive.tw
+      </a>
+      <a href="mailto:yutin@inlive.tw" target="_blank" class="item item-icon-left">
+        <i class="icon ion-paper-airplane"></i>
+        推薦頻道 yutin@inlive.tw
+      </a>
+    </ul>
+
+    <div class="card">
+      <div class="item item-text-wrap">
+<p>
+讓我們一起看見台灣, inLive.TW要把社運．救災現場的即時畫面立即傳送出去, 成為公民記者最有力的發聲管道.<br/>
+<br/>
+公民記者為人們服務的是：<br/>
+<span style="font-size:10px">
+隨選, 多視角選擇給予二十四小時不漏畫面.<br/>
+互動, 即時與記者交談並獲得想知道的影音.<br/>
+真相, 直播的所有頻道皆不經處理原味呈現.<br/>
+</span>
+<br/>
+獨立媒體, 有別於主流要成為不受政權．財團．政黨支配的「公民之眼」, 促進事件的深入探討, 讓真相不被掩蓋.
+</p>
+      </div>
+    </div>
+
+    <br />
+
+  </ion-content>
+</ion-view>

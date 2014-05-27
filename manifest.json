@@ -1,10 +1,30 @@
 {
   "name": "LiveTW",
   "manifest_version": 2,
-  "version": "0.1.3",
+  "version": "0.3.17",
   "browser_action": {
-    "default_icon": "image/icon/onair.png",
+    "default_icon": "image/icon/LiveTW.png",
     "default_title": "LiveTW",
-    "default_popup": "popup.html"
-  }
+    "default_popup": "index.html"
+  },
+  "icons": {
+    "128": "image/icon/LiveTW128.png"
+  },
+  "background": {
+    "scripts": ["plugin/parse.js", "config.js", "script/parse.js", "background/background.js"]
+  },
+  "permissions": [
+    "*://g0v.github.io/*",
+    "*://www.facebook.com/events/*",
+    "pushMessaging",
+    "notifications",
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://www.facebook.com/events/*"],
+      "css": ["content/content.css"],
+      "js": ["plugin/jquery.js", "plugin/parse.js", "content/content.js"]
+    }
+  ]
 }
