@@ -2,8 +2,9 @@ LiveTW for chrome
 =======
 inLive.TW for Chrome extension.
 
-[Chrome Extension](https://chrome.google.com/webstore/detail/livetw/fhcffinobmpdchcoapdeoinhdmlihiok)
-[Web preview](http://inlivetw.github.io/chrome/)
+- [Chrome Extension](https://chrome.google.com/webstore/detail/livetw/fhcffinobmpdchcoapdeoinhdmlihiok)
+
+- [Web preview](http://inlivetw.github.io/chrome/)
 
 ## Pre-installation
 
