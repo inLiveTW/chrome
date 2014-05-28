@@ -190,10 +190,11 @@ angular.module('starter.services', [])
       User.current(function (user) {
         if (user) {
           postParse('push', {
+            'type': 'reporter',
             'name': user.get('name'),
+            'title': user.get('name'),
             'message': message,
             'start': new Date(),
-            'type': 'reporter',
           }, function (err) {
             cb && cb(err);
           });
