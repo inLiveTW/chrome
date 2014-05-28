@@ -192,7 +192,8 @@ angular.module('starter.services', [])
           postParse('push', {
             'name': user.get('name'),
             'message': message,
-            'start': new Date()
+            'start': new Date(),
+            'type': 'reporter',
           }, function (err) {
             cb && cb(err);
           });
@@ -204,7 +205,7 @@ angular.module('starter.services', [])
   }
 })
 
-.factory('PushService', function () {
+.factory('Notify', function () {
   var storage = window.localStorage;
   var pushSync;
   var updateTimer;

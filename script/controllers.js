@@ -302,7 +302,9 @@ angular.module('starter.controllers', [])
         $ionicPopup.alert({
           title: '發送成功'
         });
-        $scope.message = '';
+        $scope.$apply(function(){
+          $scope.message = '';
+        });
       }
       logging.hide();
     });
@@ -313,19 +315,42 @@ angular.module('starter.controllers', [])
 .controller('SettingCtrl', function($scope) {
 })
 
-.controller('ListenCtrl', function($scope, $state, PushService) {
+.controller('ListenCtrl', function($scope, $state, Notify) {
 
   $scope.push = {
-    'live': PushService.getLive(),
-    'event': PushService.getEvent(),
-    'message': PushService.getMessage(),
-    'reporter': PushService.getReporter()
+    'live': Notify.getLive(),
+    'event': Notify.getEvent(),
+    'message': Notify.getMessage(),
+    'reporter': Notify.getReporter()
   };
-  $scope.$watch('push.live', PushService.setLive);
-  $scope.$watch('push.event', PushService.setEvent);
-  $scope.$watch('push.message', PushService.setMessage);
-  $scope.$watch('push.reporter', PushService.setReporter);
+  $scope.$watch('push.live', Notify.setLive);
+  $scope.$watch('push.event', Notify.setEvent);
+  $scope.$watch('push.message', Notify.setMessage);
+  $scope.$watch('push.reporter', Notify.setReporter);
 
+  $scope.leftButtons = [
+    {
+      content: '設定',
+      type: 'icon-left ion-ios7-arrow-left',
+      tap: function(e) {
+        $state.go("tab.setting");
+      }
+    }
+  ];
+
+  if ( typeof device !== 'undefined' ) {
+    $scope.token = deviceRegisterToken;
+  }else{
+    chrome.pushMessaging.getChannelId(true, function(res){
+      $scope.$apply(function(){
+        $scope.token = res.channelId;
+      });
+    });
+  }
+
+})
+
+.controller('DeveloperCtrl', function($scope, $state) {
   $scope.leftButtons = [
     {
       content: '設定',
@@ -338,20 +363,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('DeveloperCtrl', function($scope, $state, PushService) {
-  $scope.leftButtons = [
-    {
-      content: '設定',
-      type: 'icon-left ion-ios7-arrow-left',
-      tap: function(e) {
-        $state.go("tab.setting");
-      }
-    }
-  ];
-
-})
-
-.controller('NotificationCtrl', function($scope, $state, PushService) {
+.controller('NotificationCtrl', function($scope, $state) {
   $scope.leftButtons = [
     {
       content: '設定',
