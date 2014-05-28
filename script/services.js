@@ -206,12 +206,36 @@ angular.module('starter.services', [])
   }
 })
 
-.factory('Notify', function () {
+.factory('Notify', function ($http) {
   var storage = window.localStorage;
-  var pushSync;
   var updateTimer;
   var first = true;
-  return pushSync = {
+  var cache = null;
+  return {
+    fetch: function (cb) {
+      if ( cache !== null ) {
+        cb && cb(null, cache);
+      }else{
+        this.reload(cb);
+      }
+    },
+    reload: function (cb) {
+      cache = [];
+      $http({
+        'method': 'GET',
+        'url': 'https://livelink.firebaseio.com/notify/.json',
+        'cache': false
+      })
+      .success( function (data) {
+        if (typeof data === 'object') {
+          cache = data;
+        }
+        cb && cb(null, cache);
+      })
+      .error( function (data, status) {
+        cb && cb(status || true, cache);
+      });
+    },
     getLive: function(){
       return storage['push_live']==="false" ? false : true;
     },
@@ -226,19 +250,19 @@ angular.module('starter.services', [])
     },
     setLive: function(val){
       storage['push_live'] = (val==false) ? false : true;
-      pushSync.updateToServer();
+      this.updateToServer();
     },
     setEvent: function(val){
       storage['push_event'] = (val==false) ? false : true;
-      pushSync.updateToServer();
+      this.updateToServer();
     },
     setMessage: function(val){
       storage['push_message'] = (val==false) ? false : true;
-      pushSync.updateToServer();
+      this.updateToServer();
     },
     setMessage: function(val){
       storage['push_reporter'] = (val==false) ? false : true;
-      pushSync.updateToServer();
+      this.updateToServer();
     },
     updateToServer: function()
     {

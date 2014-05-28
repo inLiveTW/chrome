@@ -363,7 +363,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('NotificationCtrl', function($scope, $state) {
+.controller('NotificationCtrl', function($scope, $state, $ionicLoading, $ionicPopup, Notify) {
   $scope.leftButtons = [
     {
       content: '設定',
@@ -374,5 +374,30 @@ angular.module('starter.controllers', [])
     }
   ];
 
+  $scope.notifys = [];
+  
+  var fetch;
+  ( fetch = function (cmd) {
+    var logging = $ionicLoading.show({
+      'content': '載入中...'
+    });
+    Notify[cmd](function (err, list) {
+      $scope.notifys = list || [];
+      console.log($scope.notifys);
+      logging.hide();
+      if (err) {
+        var confirmPopup = $ionicPopup.confirm({
+          'title': '連線異常, 是否重試？',
+          'cancelText': '取消',
+          'okText': '重試'
+        });
+        confirmPopup.then(function(res) {
+          if (res) {
+            fetch('reload');
+          }
+        });
+      }
+    });
+  })('fetch');
 
 });
