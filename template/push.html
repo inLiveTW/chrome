@@ -1,0 +1,29 @@
+<ion-nav-bar
+  type="bar-assertive"
+  animation="nav-title-slide-ios7" 
+  back-button-type="button-icon button-clear" 
+  back-button-icon="ion-ios7-arrow-back">
+</ion-nav-bar>
+<ion-view title="推播" hide-back-button="true" right-buttons="rightButtons">
+  <ion-content has-header="true" has-tabs="true">
+    <div class="card">
+      <div class="item item-text-wrap">
+        感謝 {{name}} 的努力與付出！
+      </div>
+      <div class="item item-text-wrap" style="font-size:12px">
+        推播服務會即時且主動的, 將訊息透過Chrome / Android / iOS(iPhone,iPad), 傳送給所有關心公共事物的公民們.
+      </div>
+    </div>
+
+    <form name="pushForm" ng-submit="push(message)">
+      <div class="list list-inset">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">訊息內容</span>
+          <textarea placeholder="請陳述事實為勿煽動與挑釁" rows="5" ng-model="message" required></textarea>
+        </label>
+        <button ng-disabled="pushForm.$invalid" type="submit" class="button button-positive button-block">送出</button>
+      </div>
+    </form>
+
+  </ion-content>
+</ion-view>

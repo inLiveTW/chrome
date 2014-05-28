@@ -43,7 +43,7 @@ angular.module('starter.controllers', [])
   }
 
   var fetch;
-  ($scope.fetch = fetch = function (cmd) {
+  (fetch = function (cmd) {
     var logging = $ionicLoading.show({
       'content': '掃描中...'
     });
@@ -87,7 +87,7 @@ angular.module('starter.controllers', [])
   ];
 
   var fetch;
-  ( $scope.fetch = fetch = function (cmd) {
+  ( fetch = function (cmd) {
     var logging = $ionicLoading.show({
       'content': '更新中...'
     });
@@ -126,7 +126,7 @@ angular.module('starter.controllers', [])
   }
   
   var fetch;
-  ( $scope.fetch = fetch = function (cmd) {
+  ( fetch = function (cmd) {
     var logging = $ionicLoading.show({
       'content': '連線中...'
     });
@@ -152,6 +152,7 @@ angular.module('starter.controllers', [])
     });
   })('fetch');
 })
+
 .controller('ReportCtrl', function($scope, $ionicLoading, $ionicPopup, $state, $stateParams, News) {
   $scope.reports = [];
   $scope.id = 0;
@@ -175,7 +176,7 @@ angular.module('starter.controllers', [])
   ];
   
   var fetch;
-  ( $scope.fetch = fetch = function (cmd) {
+  ( fetch = function (cmd) {
     var logging = $ionicLoading.show({
       'content': '連線中...'
     });
@@ -199,6 +200,7 @@ angular.module('starter.controllers', [])
     });
   })('fetch');
 })
+
 .controller('EventCtrl', function($scope, $ionicLoading, $ionicPopup, Event) {
   $scope.events = [];
 
@@ -212,7 +214,7 @@ angular.module('starter.controllers', [])
   ];
   
   var fetch;
-  ( $scope.fetch = fetch = function (cmd) {
+  ( fetch = function (cmd) {
     var logging = $ionicLoading.show({
       'content': '載入中...'
     });
@@ -235,15 +237,142 @@ angular.module('starter.controllers', [])
   })('fetch');
 })
 
-.controller('SettingCtrl', function($scope, $ionicLoading, $ionicPopup, PushService) {
+.controller('ReporterCtrl', function($scope, $state, $ionicLoading, $ionicPopup, User) {
+  var storage = window.localStorage;
+
+  $scope.user = {
+    'username': storage['usr'],
+    'password': storage['pwd']
+  }
+
+  $scope.login = function(user){
+    var logging = $ionicLoading.show({
+      content: 'Login...',
+    });
+    User.login(user.username, user.password, function(status, info) {
+      if ( status === true ) {
+          storage['usr'] = user.username;
+          storage['pwd'] = user.password;
+          $state.go('tab.push');
+      } else if ( status === false ) {
+          $ionicPopup.alert({
+            title: '登入失敗',
+            content: '帳號/密碼 錯誤！',
+          });
+      } else {
+        $ionicPopup.alert({
+          title: '登入失敗',
+          content: '網路連線異常！',
+        });
+      }
+      logging.hide();
+    });
+  }
+
+  User.current( function (user) {
+    if ( user ) {
+      $state.go('tab.push');
+    } else if ( $scope.user.username && $scope.user.password ) {
+      $scope.login($scope.user);
+    }
+  });
+})
+
+.controller('PushCtrl', function($scope, $ionicLoading, $ionicPopup, User, Push) {
+  $scope.name = '公民記者';
+  User.current ( function (user) {
+    if ( user ) {
+      $scope.name = user.get('name');
+    }
+  });
+  $scope.push = function (message) {
+    var logging = $ionicLoading.show({
+      'content': '發送中'
+    });
+    Push.send(message, function (err) {
+      if (err===true) {
+        $ionicPopup.alert({
+          title: '無法驗證身份'
+        });
+      } else if (err) {
+        $ionicPopup.alert({
+          title: '發送異常'
+        });
+      } else {
+        $ionicPopup.alert({
+          title: '發送成功'
+        });
+        $scope.$apply(function(){
+          $scope.message = '';
+        });
+      }
+      logging.hide();
+    });
+  }
+})
+
+
+.controller('SettingCtrl', function($scope) {
+})
+
+.controller('ListenCtrl', function($scope, $state, Notify) {
+
   $scope.push = {
-    'live': PushService.getLive(),
-    'event': PushService.getEvent(),
-    'message': PushService.getMessage(),
-    'reporter': PushService.getReporter()
+    'live': Notify.getLive(),
+    'event': Notify.getEvent(),
+    'message': Notify.getMessage(),
+    'reporter': Notify.getReporter()
   };
-  $scope.$watch('push.live', PushService.setLive);
-  $scope.$watch('push.event', PushService.setEvent);
-  $scope.$watch('push.message', PushService.setMessage);
-  $scope.$watch('push.reporter', PushService.setReporter);
+  $scope.$watch('push.live', Notify.setLive);
+  $scope.$watch('push.event', Notify.setEvent);
+  $scope.$watch('push.message', Notify.setMessage);
+  $scope.$watch('push.reporter', Notify.setReporter);
+
+  $scope.leftButtons = [
+    {
+      content: '設定',
+      type: 'icon-left ion-ios7-arrow-left',
+      tap: function(e) {
+        $state.go("tab.setting");
+      }
+    }
+  ];
+
+  if ( typeof device !== 'undefined' ) {
+    $scope.token = deviceRegisterToken;
+  }else{
+    chrome.pushMessaging.getChannelId(true, function(res){
+      $scope.$apply(function(){
+        $scope.token = res.channelId;
+      });
+    });
+  }
+
+})
+
+.controller('DeveloperCtrl', function($scope, $state) {
+  $scope.leftButtons = [
+    {
+      content: '設定',
+      type: 'icon-left ion-ios7-arrow-left',
+      tap: function(e) {
+        $state.go("tab.setting");
+      }
+    }
+  ];
+
+})
+
+.controller('NotificationCtrl', function($scope, $state) {
+  $scope.leftButtons = [
+    {
+      content: '設定',
+      type: 'icon-left ion-ios7-arrow-left',
+      tap: function(e) {
+        $state.go("tab.setting");
+      }
+    }
+  ];
+
+
 });

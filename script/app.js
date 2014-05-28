@@ -54,6 +54,24 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
         }
       }
     })
+    .state('tab.reporter', {
+      url: '/reporter',
+      views: {
+        'reporter-tab': {
+          templateUrl: 'template/reporter.html',
+          controller: 'ReporterCtrl'
+        }
+      }
+    })
+    .state('tab.push', {
+      url: '/push',
+      views: {
+        'reporter-tab': {
+          templateUrl: 'template/push.html',
+          controller: 'PushCtrl'
+        }
+      }
+    })
     .state('tab.setting', {
       url: '/setting',
       views: {
@@ -63,6 +81,33 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
         }
       }
     })
+    .state('tab.listen', {
+      url: '/listen',
+      views: {
+        'setting-tab': {
+          templateUrl: 'template/listen.html',
+          controller: 'ListenCtrl'
+        }
+      }
+    })
+    .state('tab.developer', {
+      url: '/developer',
+      views: {
+        'setting-tab': {
+          templateUrl: 'template/developer.html',
+          controller: 'DeveloperCtrl'
+        }
+      }
+    })
+    .state('tab.notification', {
+      url: '/notification',
+      views: {
+        'setting-tab': {
+          templateUrl: 'template/notification.html',
+          controller: 'NotificationCtrl'
+        }
+      }
+    });
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/live');

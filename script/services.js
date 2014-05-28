@@ -158,7 +158,55 @@ angular.module('starter.services', [])
   }
 })
 
-.factory('PushService', function () {
+.factory('User', function () {
+  return {
+    login: function (username, password, cb) {
+      Parse.User.logIn(username, password, {
+        success: function(user) {
+          console.log(user);
+          cb && cb(true, user);
+        },
+        error: function(user, error) {
+          if ( error && error.code=='101' ) {
+            cb && cb(false);
+          } else {
+            cb && cb();
+          }
+        }
+      });
+    },
+    current: function (cb) {
+      cb && cb(Parse.User.current());
+    },
+    logout: function () {
+      Parse.User.logOut();
+    }
+  }
+})
+
+.factory('Push', function (User) {
+  return {
+    send: function (message, cb) {
+      User.current(function (user) {
+        if (user) {
+          postParse('push', {
+            'type': 'reporter',
+            'name': user.get('name'),
+            'title': user.get('name'),
+            'message': message,
+            'start': new Date(),
+          }, function (err) {
+            cb && cb(err);
+          });
+        }else{
+          cb && cb(true);
+        }
+      });
+    }
+  }
+})
+
+.factory('Notify', function () {
   var storage = window.localStorage;
   var pushSync;
   var updateTimer;
