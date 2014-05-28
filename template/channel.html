@@ -21,6 +21,12 @@
 
     </div>
 
+    <div class="card" ng-hide="channels.length>0">
+      <button class="button button-block icon-left ion-loop" ng-click="fetch('reload')">
+        點擊更新頻道
+      </button>
+    </div>
+
     <br />
 
   </ion-content>

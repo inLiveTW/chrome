@@ -19,7 +19,7 @@ sips $ICON -Z 48 -o $ANDROID_ICON'drawable-mdpi/icon.png'
 sips $ICON -Z 72 -o $ANDROID_ICON'drawable-hdpi/icon.png'
 sips $ICON -Z 96 -o $ANDROID_ICON'drawable-xhdpi/icon.png'
 
-IOS_ICON='../../platforms/ios/LiveTW/Resources/icons/'
+IOS_ICON='../../platforms/ios/inLiveTW/Resources/icons/'
 
 sips $ICON -Z 57 -o $IOS_ICON'icon.png'
 sips $ICON -Z 114 -o $IOS_ICON'icon@2x.png'
