@@ -15,7 +15,7 @@
                 {{notify.message}}
             </p>
             <p class="subdued">
-                {{notify.datetime}}
+                - {{notify.datetime | toDateTime}}
             </p>
         </div>
         <a class="item item-icon-left assertive" ng-show="notify.link" ng-click="open('{{notify.link}}')">
