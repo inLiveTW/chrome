@@ -1,5 +1,22 @@
 LiveTW for chrome
 =======
+inLive.TW for Chrome extension.
+
+- [Chrome Extension](https://chrome.google.com/webstore/detail/livetw/fhcffinobmpdchcoapdeoinhdmlihiok)
+
+- [Web preview](http://inlivetw.github.io/chrome/)
+
+## Pre-installation
+
+- Install [Node.js](http://nodejs.org/)
+
+## Installation
+
+`npm i`
+
+`npm start`
+
+And then open `http://localhost:3000/` . It would livereload when you are developing.
 
 
 ## License
