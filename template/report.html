@@ -24,6 +24,12 @@
       </a>
     </div>
 
+    <div class="card" ng-hide="reports.length>0">
+      <button class="button button-block icon-left ion-loop" ng-click="fetch('reload')">
+        點擊更新報導
+      </button>
+    </div>
+
     <br />
 
   </ion-content>
