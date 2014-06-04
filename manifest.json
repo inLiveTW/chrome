@@ -1,10 +1,10 @@
 {
-  "name": "LiveTW",
+  "name": "inLiveTW",
   "manifest_version": 2,
-  "version": "0.4.5",
+  "version": "0.4.6",
   "browser_action": {
     "default_icon": "image/icon/LiveTW.png",
-    "default_title": "LiveTW",
+    "default_title": "inLiveTW",
     "default_popup": "index.html"
   },
   "icons": {
