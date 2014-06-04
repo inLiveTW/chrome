@@ -18,6 +18,9 @@ function registerToken(){
   if ( ! (localStorage && localStorage['push_message']==='false') ) {
     channel.push('message');
   }
+  if ( ! (localStorage && localStorage['push_reporter']==='false') ) {
+    channel.push('reporter');
+  }
 
   postParse('mobile_token', {
     'type': device.platform.toLowerCase(),

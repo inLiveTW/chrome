@@ -160,6 +160,11 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
 })
 
 .run(function($rootScope){
+  if ( chrome && localStorage ) {
+    localStorage['push_open'] = 0;
+    chrome.browserAction.setBadgeText({text: ''});
+  }
+
   $rootScope.open = function(url){
     window.open(url, '_blank');
   };

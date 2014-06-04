@@ -43,7 +43,7 @@ angular.module('starter.controllers', [])
   }
 
   var fetch;
-  (fetch = function (cmd) {
+  ( $scope.fetch = fetch = function (cmd) {
     var logging = $ionicLoading.show({
       'content': '掃描中...'
     });
@@ -87,7 +87,7 @@ angular.module('starter.controllers', [])
   ];
 
   var fetch;
-  ( fetch = function (cmd) {
+  ( $scope.fetch = fetch = function (cmd) {
     var logging = $ionicLoading.show({
       'content': '更新中...'
     });
@@ -126,7 +126,7 @@ angular.module('starter.controllers', [])
   }
   
   var fetch;
-  ( fetch = function (cmd) {
+  ( $scope.fetch = fetch = function (cmd) {
     var logging = $ionicLoading.show({
       'content': '連線中...'
     });
@@ -176,7 +176,7 @@ angular.module('starter.controllers', [])
   ];
   
   var fetch;
-  ( fetch = function (cmd) {
+  ( $scope.fetch = fetch = function (cmd) {
     var logging = $ionicLoading.show({
       'content': '連線中...'
     });
@@ -214,7 +214,7 @@ angular.module('starter.controllers', [])
   ];
   
   var fetch;
-  ( fetch = function (cmd) {
+  ( $scope.fetch = fetch = function (cmd) {
     var logging = $ionicLoading.show({
       'content': '載入中...'
     });
@@ -377,7 +377,7 @@ angular.module('starter.controllers', [])
   $scope.notifys = [];
   
   var fetch;
-  ( fetch = function (cmd) {
+  ( $scope.fetch = fetch = function (cmd) {
     var logging = $ionicLoading.show({
       'content': '載入中...'
     });

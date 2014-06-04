@@ -14,6 +14,9 @@ var registerToken = function(){
   if ( ! (localStorage && localStorage['push_message']==='false') ) {
     channel.push('message');
   }
+  if ( ! (localStorage && localStorage['push_reporter']==='false') ) {
+    channel.push('reporter');
+  }
 
   chrome.pushMessaging.getChannelId(true, function(res){
     if ( res.channelId ) {
@@ -61,6 +64,11 @@ chrome.pushMessaging.onMessage.addListener(function(message){
         if ( !(localStorage && localStorage['push_reporter']==="false") ) {
           notify("『公民記者』 - " + payload.title, payload.message, payload.link);
         }
+        break;
+      case 'open':
+        var count = parseInt(localStorage && localStorage['push_open'] || 0, 10);
+        var addition = parseInt(payload.count, 10);
+        chrome.browserAction.setBadgeText({text: count + addition});
         break;
     }
   }
