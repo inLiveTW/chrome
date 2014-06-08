@@ -67,8 +67,9 @@ chrome.pushMessaging.onMessage.addListener(function(message){
         break;
       case 'open':
         var count = parseInt(localStorage && localStorage['push_open'] || 0, 10);
-        var addition = parseInt(payload.count, 10);
-        chrome.browserAction.setBadgeText({text: count + addition});
+        count += parseInt(payload.count, 10);
+        localStorage['push_open'] = count;
+        chrome.browserAction.setBadgeText({text: count > 10 ? '10+' : count + ''});
         break;
     }
   }

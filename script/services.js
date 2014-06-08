@@ -274,7 +274,7 @@ angular.module('starter.services', [])
         if ( first ) {
           first = false;
         }else{
-          if ( typeof device !== 'undefined' ) {
+          if ( cordova ) {
             registerToken();
           }else{
             chrome.runtime.sendMessage({cmd: "register_token"});

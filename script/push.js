@@ -1,7 +1,7 @@
 var pushNotification;
 var deviceRegisterToken;
 
-document.addEventListener("deviceready", onDeviceReady, false);
+cordova && document.addEventListener("deviceready", onDeviceReady, false);
 
 function registerToken(){
   if ( !deviceRegisterToken ) {

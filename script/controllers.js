@@ -12,6 +12,18 @@ angular.module('starter.controllers', [])
     }
   ];
 
+  $scope.open = function(live) {
+    if ( typeof device !== 'undefined' ) {
+      if ( live.stream ) {
+        window.open(live.stream);
+      }else{
+        $scope.$parent.open(live.embed || live.url);
+      }
+    }else{
+      $scope.$parent.open(live.url);
+    }
+  }
+
   $scope.setLocation = function (live) {
     if ( live.location ) {
         $ionicPopup.confirm({
@@ -338,7 +350,7 @@ angular.module('starter.controllers', [])
     }
   ];
 
-  if ( typeof device !== 'undefined' ) {
+  if ( cordova ) {
     $scope.token = deviceRegisterToken;
   }else{
     chrome.pushMessaging.getChannelId(true, function(res){
