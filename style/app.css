@@ -2,6 +2,12 @@
     margin-top: 0px;
 }
 
-p.subdued {
+.subdue,
+.item .subdue {
   font-size: 10px;
+}
+
+
+.subdue .highlight{
+  font-size: 14px;
 }

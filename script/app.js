@@ -160,7 +160,7 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
 })
 
 .run(function($rootScope){
-  if ( !cordova && chrome && chrome.browserAction && localStorage ) {
+  if ( typeof cordova === "undefined" && chrome && chrome.browserAction && localStorage ) {
     localStorage['push_open'] = 0;
     chrome.browserAction.setBadgeText({text: ''});
   }

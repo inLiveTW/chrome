@@ -12,15 +12,19 @@ angular.module('starter.controllers', [])
     }
   ];
 
-  $scope.open = function(live) {
-    if ( typeof device !== 'undefined' ) {
+  $scope.stream = function(live) {
+    if ( typeof cordova === "undefined" ) {
+      $scope.$parent.open(live.url);
+    }else{
       if ( live.stream ) {
-        window.open(live.stream);
+        if ( cordova.plugins && cordova.plugins.videoPlayer ) {
+          cordova.plugins.videoPlayer.play(live.stream);
+        }else{
+          window.open(live.stream);
+        }
       }else{
         $scope.$parent.open(live.embed || live.url);
       }
-    }else{
-      $scope.$parent.open(live.url);
     }
   }
 
@@ -297,11 +301,18 @@ angular.module('starter.controllers', [])
       $scope.name = user.get('name');
     }
   });
-  $scope.push = function (message) {
+
+  $scope.req = {
+    'type': 'event',
+    'message': '',
+    'link': ''
+  };
+
+  $scope.push = function (req) {
     var logging = $ionicLoading.show({
       'content': '發送中'
     });
-    Push.send(message, function (err) {
+    Push.send(req, function (err) {
       if (err===true) {
         $ionicPopup.alert({
           title: '無法驗證身份'
@@ -315,7 +326,8 @@ angular.module('starter.controllers', [])
           title: '發送成功'
         });
         $scope.$apply(function(){
-          $scope.message = '';
+          req.message = '';
+          req.link = '';
         });
       }
       logging.hide();
@@ -350,14 +362,14 @@ angular.module('starter.controllers', [])
     }
   ];
 
-  if ( cordova ) {
-    $scope.token = deviceRegisterToken;
-  }else{
+  if ( typeof cordova === "undefined" ) {
     chrome.pushMessaging.getChannelId(true, function(res){
       $scope.$apply(function(){
         $scope.token = res.channelId;
       });
     });
+  }else{
+    $scope.token = deviceRegisterToken;
   }
 
 })

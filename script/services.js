@@ -186,14 +186,14 @@ angular.module('starter.services', [])
 
 .factory('Push', function (User) {
   return {
-    send: function (message, cb) {
+    send: function (req, cb) {
       User.current(function (user) {
         if (user) {
           postParse('push', {
-            'type': 'reporter',
+            'type': req.type || 'reporter',
             'name': user.get('name'),
-            'title': user.get('name'),
-            'message': message,
+            'message': req.message,
+            'link': req.link,
             'start': new Date(),
           }, function (err) {
             cb && cb(err);
@@ -274,10 +274,10 @@ angular.module('starter.services', [])
         if ( first ) {
           first = false;
         }else{
-          if ( cordova ) {
-            registerToken();
-          }else{
+          if ( typeof cordova === "undefined" ) {
             chrome.runtime.sendMessage({cmd: "register_token"});
+          }else{
+            registerToken();
           }
         }
       }, 1000);

@@ -1,7 +1,7 @@
 var pushNotification;
 var deviceRegisterToken;
 
-cordova && document.addEventListener("deviceready", onDeviceReady, false);
+document.addEventListener("deviceready", onDeviceReady, false);
 
 function registerToken(){
   if ( !deviceRegisterToken ) {
@@ -82,21 +82,21 @@ function onDeviceReady(){
 
 // iOS
 function onNotificationAPN (event) {
-    if ( event.alert )
-    {
-        navigator.notification.alert(event.alert);
-    }
+  if ( event.alert )
+  {
+    navigator.notification.alert(event.alert);
+  }
 
-    if ( event.sound )
-    {
-        var snd = new Media(event.sound);
-        snd.play();
-    }
+  if ( event.sound )
+  {
+    var snd = new Media(event.sound);
+    snd.play();
+  }
 
-    if ( event.badge )
-    {
-        pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
-    }
+  if ( event.badge )
+  {
+    pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
+  }
 }
 
 // Android
@@ -104,15 +104,18 @@ function onNotificationGCM(e) {
   switch( e.event )
   {
     case 'registered':
-        if ( e.regid.length > 0 )
-        {
-          deviceRegisterToken = e.regid;
-          registerToken();
-        }
+      if ( e.regid.length > 0 )
+      {
+        deviceRegisterToken = e.regid;
+        registerToken();
+      }
     break;
 
     case 'message':
-      alert(e.payload);
+      alert(e.payload.title + "\n" + e.payload.message);
+      if( e.payload.link ) {
+        window.open(e.payload.link, '_blank');
+      }
     break;
 
     case 'error':

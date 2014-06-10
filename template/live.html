@@ -13,7 +13,14 @@
         <p>{{live.location ? live.location : '知道在哪直播嗎？'}}</p>
       </div>
 
-      <a class="item item-icon-left assertive" ng-click="open(live)">
+      <div class="item item-body">
+        <a class="subdue" ng-click="open('{{live.shorten}}')">
+          網址:&nbsp;
+          <span class="highlight">{{live.shorten}}</span>
+        </a>
+      </div>
+
+      <a class="item item-icon-left assertive" ng-click="stream(live)">
         <i class="icon ion-radio-waves"></i>
         立即收看 {{live.type}}
       </a>

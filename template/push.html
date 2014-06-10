@@ -15,11 +15,24 @@
       </div>
     </div>
 
-    <form name="pushForm" ng-submit="push(message)">
+    <form name="pushForm" ng-submit="push(req)">
       <div class="list list-inset">
+        <label class="item item-input item-selected">
+          <span class="input-label">類型</span>
+          <select ng-model="req.type">
+            <option value="live">節目開播</option>
+            <option value="event" selected>事件通知</option>
+            <option value="message">即時訊息</option>
+            <option value="reporter">記者報導</option>
+          </select>
+        </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">訊息內容</span>
-          <textarea placeholder="請陳述事實為勿煽動與挑釁" rows="5" ng-model="message" required></textarea>
+          <textarea placeholder="請陳述事實為勿煽動與挑釁" rows="5" ng-model="req.message" required></textarea>
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">超連結</span>
+          <input type="text" placeholder="點通知開網頁, 可留空白" ng-model="req.link"></input>
         </label>
         <button ng-disabled="pushForm.$invalid" type="submit" class="button button-positive button-block">送出</button>
       </div>
