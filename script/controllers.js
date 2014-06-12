@@ -17,8 +17,8 @@ angular.module('starter.controllers', [])
       $scope.$parent.open(live.url);
     }else{
       if ( live.stream ) {
-        if ( cordova.plugins && cordova.plugins.videoPlayer ) {
-          cordova.plugins.videoPlayer.play(live.stream);
+        if ( cordova.plugins && cordova.plugins.streamPlayer ) {
+          cordova.plugins.streamPlayer.play(live.stream);
         }else{
           window.open(live.stream);
         }
