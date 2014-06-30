@@ -40,16 +40,45 @@ angular.module('starter.services', [])
     setLocation: function (vuid, location) {
       var data = JSON.parse(storage['location'] || "{}");
       if (data[vuid] != location) {
-        postParse('live_location', {
-          'vuid': vuid,
-          'location': location
-        }, function (err, obj) {
-          if (err) {
-            console.log('save token error: ', error);
-          }else{
-            console.log('save '+vuid+':', location, 'obj id:', obj.id);
-          }
-        });
+         $http({
+            'method': 'GET',
+            'url': 'http://query.yahooapis.com/v1/public/yql?q=select+%2A+from+geo.placefinder+where+text%3D%22'
+                      + location +'%22+and+locale%3D%22zh_TW%22&format=json"',
+            'cache': false
+        })
+          .success( function (d) {
+              var lat, lng;
+              try {
+               lat = d.query.results.Result[0].latitude;
+               lng = d.query.results.Result[0].longitude;
+              } catch(err) { }
+
+              if (!lat || !lng) {                        
+                  try {
+                   lat = d.query.results.Result.latitude;
+                   lng = d.query.results.Result.longitude;
+                  } catch(err) {  }
+              }
+
+              postParse('live_location', {
+                'vuid': vuid,
+                'location': location,
+                'latlngColumn' :  (lat + ',' + lng)
+              }, function (err, obj) {
+                if (err) {
+                  console.log('save token error: ', error);
+                }else{
+                  console.log('save '+vuid+':', location,
+                             'obj id:', obj.id,
+                             'latlngColumn', obj.latlngColumn);
+                }
+              });
+
+          })
+          .error( function (data, status) {
+            cb && cb(status || true, cache);
+          });  
+          
       }
       data[vuid] = location;
       storage['location'] = JSON.stringify(data);
