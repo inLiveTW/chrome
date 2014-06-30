@@ -40,6 +40,7 @@ angular.module('starter.services', [])
     setLocation: function (vuid, location) {
       var data = JSON.parse(storage['location'] || "{}");
       if (data[vuid] != location) {
+          // 取得經緯度
          $http({
             'method': 'GET',
             'url': 'http://query.yahooapis.com/v1/public/yql?q=select+%2A+from+geo.placefinder+where+text%3D%22'
