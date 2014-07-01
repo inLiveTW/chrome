@@ -21,6 +21,12 @@ function registerToken(){
   if ( ! (localStorage && localStorage['push_reporter']==='false') ) {
     channel.push('reporter');
   }
+  if ( ! (localStorage && localStorage['push_congress']==='false') ) {
+    channel.push('congress');
+  }
+  if ( (localStorage && localStorage['push_directed']==='true') ) {
+    channel.push('directed');
+  }
 
   postParse('mobile_token', {
     'type': device.platform.toLowerCase(),
@@ -114,7 +120,12 @@ function onNotificationGCM(e) {
     case 'message':
       alert(e.payload.title + "\n" + e.payload.message);
       if( e.payload.link ) {
-        window.open(e.payload.link, '_blank');
+        var stream = (/youtube\.com/gi.exec(e.payload.link) || /ustream\.tv/gi.exec(e.payload.link)) ? true : false ;
+        if ( stream && cordova.plugins && cordova.plugins.streamPlayer ) {
+          cordova.plugins.streamPlayer.play(e.payload.link);
+        }else{
+          window.open(e.payload.link, '_blank');
+        }
       }
     break;
 

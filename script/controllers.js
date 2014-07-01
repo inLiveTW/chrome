@@ -16,14 +16,14 @@ angular.module('starter.controllers', [])
     if ( typeof cordova === "undefined" ) {
       $scope.$parent.open(live.url);
     }else{
-      if ( live.stream ) {
-        if ( cordova.plugins && cordova.plugins.streamPlayer ) {
-          cordova.plugins.streamPlayer.play(live.stream);
-        }else{
-          window.open(live.stream);
-        }
+      if ( cordova.plugins && cordova.plugins.streamPlayer ) {
+        cordova.plugins.streamPlayer.play(live.url);
       }else{
-        $scope.$parent.open(live.embed || live.url);
+        if ( cordova && live.stream ) {
+          window.open(live.stream);
+        }else{
+          $scope.$parent.open(live.embed || live.url);
+        }
       }
     }
   }
@@ -151,6 +151,11 @@ angular.module('starter.controllers', [])
       for (key in data) {
         news.push(data[key]);
       };
+      
+      news.sort(function (x,y) {
+        return x.priority < y.priority ? 1 : -1;
+      });
+
       $scope.news = news;
       logging.hide();
       if (err) {
@@ -217,8 +222,10 @@ angular.module('starter.controllers', [])
   })('fetch');
 })
 
-.controller('EventCtrl', function($scope, $ionicLoading, $ionicPopup, Event) {
+.controller('EventCtrl', function($scope, $ionicLoading, $ionicPopup, $stateParams, Event) {
   $scope.events = [];
+  $scope.groups = [];
+  $scope.group = $stateParams.group;
 
   $scope.rightButtons = [
     {
@@ -228,14 +235,30 @@ angular.module('starter.controllers', [])
       }
     }
   ];
-  
+
+  $scope.leftButtons = [
+    {
+      type: 'icon-left ion-navicon',
+      tap: function(e) {
+        $scope.sideMenuController.toggleLeft();
+      }
+    }
+  ];
+
+  $scope.setGroup = function (group) {
+    $scope.group = group;
+    $scope.sideMenuController.toggleLeft();
+  }
+
   var fetch;
   ( $scope.fetch = fetch = function (cmd) {
     var logging = $ionicLoading.show({
       'content': '載入中...'
     });
-    Event[cmd](function (err, list) {
-      $scope.events = list;
+    Event[cmd](function (err, data) {
+      $scope.events = data;
+      $scope.groups = Object.keys(data) || [];
+      console.log(data);
       logging.hide();
       if (err) {
         var confirmPopup = $ionicPopup.confirm({
@@ -345,12 +368,16 @@ angular.module('starter.controllers', [])
     'live': Notify.getLive(),
     'event': Notify.getEvent(),
     'message': Notify.getMessage(),
-    'reporter': Notify.getReporter()
+    'reporter': Notify.getReporter(),
+    'congress': Notify.getCongress(),
+    'directed': Notify.getDirected()
   };
   $scope.$watch('push.live', Notify.setLive);
   $scope.$watch('push.event', Notify.setEvent);
   $scope.$watch('push.message', Notify.setMessage);
   $scope.$watch('push.reporter', Notify.setReporter);
+  $scope.$watch('push.congress', Notify.setCongress);
+  $scope.$watch('push.directed', Notify.setDirected);
 
   $scope.leftButtons = [
     {

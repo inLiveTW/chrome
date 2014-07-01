@@ -46,7 +46,7 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
       }
     })
     .state('tab.event', {
-      url: '/event',
+      url: '/event/{group}',
       views: {
         'event-tab': {
           templateUrl: 'template/event.html',
@@ -113,6 +113,14 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
   $urlRouterProvider.otherwise('/tab/live');
 
 })
+
+.config( [
+    '$compileProvider',
+    function( $compileProvider )
+    {   
+        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension):/);
+    }
+])
 
 .filter('toDateTime', function(){
   return function(str){

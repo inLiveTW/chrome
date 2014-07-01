@@ -1,41 +1,61 @@
-<ion-nav-bar
-        type="bar-assertive"
-        animation="nav-title-slide-ios7" 
-        back-button-type="button-icon button-clear" 
-        back-button-icon="ion-ios7-arrow-back"></ion-nav-bar>
-<ion-view title="事件" hide-back-button="true" right-buttons="rightButtons">
-  <ion-content has-header="true" has-tabs="true">
-    <div class="card" ng-repeat="event in events">
+<ion-side-menus>
+  <ion-pane ion-side-menu-content>
+    <ion-nav-bar
+      type="bar-assertive"
+      animation="nav-title-slide-ios7" 
+      back-button-type="button-icon button-clear" 
+      back-button-icon="ion-ios7-arrow-back">
+    </ion-nav-bar>
+    <ion-nav-view>
+      <ion-view title="事件 > {{group}}" hide-back-button="true" left-buttons="leftButtons" right-buttons="rightButtons">
+        <ion-content has-header="true" has-tabs="true">
+          <div class="card" ng-repeat="event in events[group]">
 
-      <div class="item item-divider">
-        <h2>{{event.title}}</h2>
-        <p>{{event.start | toDateTime}}</p>
-      </div>
+            <div class="item item-divider">
+              <h2>{{event.title}}</h2>
+              <p>{{event.start | toDateTime}}</p>
+            </div>
 
-      <div class="item item-body">
-        <img class="full-image" ng-show="event.photo" src="{{event.photo}}">
-        <p class="subdue">
-          <span ng-show="event.title">名稱：{{event.title}}</span><br/>
-          <span ng-show="event.location">地點：{{event.location}}</span><br/>
-          <span ng-show="event.owner">招集單位：{{event.owner}}</span><br/>
-          <span ng-show="event.tag">標籤：{{event.tag}}</span>
-        </p>
-      </div>
+            <div class="item item-body">
+              <img class="full-image" ng-show="event.photo" src="{{event.photo}}">
+              <p class="subdue">
+                <span ng-show="event.title">名稱：{{event.title}}</span><br/>
+                <span ng-show="event.location">地點：{{event.location}}</span><br/>
+                <span ng-show="event.owner">招集單位：{{event.owner}}</span><br/>
+                <span ng-show="event.tag">標籤：{{event.tag}}</span>
+              </p>
+            </div>
 
-      <a class="item item-icon-left assertive" ng-click="open('{{event.link}}')">
-        <i class="icon ion-forward"></i>
-        了解更多細節
-      </a>
+            <a class="item item-icon-left assertive" ng-click="open('{{event.link}}')">
+              <i class="icon ion-forward"></i>
+              了解更多細節
+            </a>
 
-    </div>
-    
-    <div class="card" ng-hide="events.length>0">
-      <button class="button button-block icon-left ion-loop" ng-click="fetch('reload')">
-        點擊更新事件
-      </button>
-    </div>
+          </div>
+          
+          <div class="card" ng-hide="events.length>0">
+            <button class="button button-block icon-left ion-loop" ng-click="fetch('reload')">
+              點擊更新事件
+            </button>
+          </div>
 
-    <br />
+          <br />
+        </ion-content>
+      </ion-view>
+    </ion-nav-view>
+  </ion-pane>
 
-  </ion-content>
-</ion-view>
+  <ion-side-menu side="left">
+        <ion-header-bar class="bar bar-header bar-assertive">
+            <h1 class="title">事件</h1>
+        </ion-header-bar>
+        <ion-content has-header="true">
+            <ion-list>
+                <a class="item" href="#/tab/event/{{group}}" ng-click="setGroup('{{group}}')" ng-repeat="group in groups">
+                    {{group}}
+                    <span class="badge badge-assertive">{{events[group].length}}</span>
+                </a>
+            </ion-list>
+        </ion-content>
+  </ion-side-menu>
+</ion-side-menus>
